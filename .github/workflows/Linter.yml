@@ -42,6 +42,7 @@ jobs:
         uses: github/super-linter@v4
         env:
           IGNORE_GITIGNORED_FILES: true
+          VALIDATE_MARKDOWN: false
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
