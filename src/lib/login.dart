@@ -106,22 +106,17 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-            (usernameCorrect && passwordCorrect) ? SizedBox(height: 0) : SizedBox(height: 5),
+              (usernameCorrect && passwordCorrect) ? SizedBox(height: 0) : SizedBox(height: 5),
 
               // Error messages
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
-                  // decoration: BoxDecoration(
-                  //   border: Border.all(color: (passwordCorrect) ? Colors.grey : Colors.red),
-                  //   borderRadius: BorderRadius.circular(12),
-                  // ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-
                     children: [
-                      if (!usernameCorrect)
+                      if (!usernameCorrect)   // Show incorrect Username message if username is incorrect
                         Row(
                           children: [
                             Icon(
@@ -130,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                               size: 14.0,
                             ),
                             Text(
-                              ' Incorrect username',
+                              ' Incorrect Username',
                               textAlign: TextAlign.start,
                               style: TextStyle(
                                 color: Colors.red,
@@ -138,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ],
                         ),
-                      if (!passwordCorrect)
+                      if (!passwordCorrect)   // Show incorrect Password message if password is incorrect
                         Row(
                           children: [
                             Icon(
@@ -147,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                               size: 14.0,
                             ),
                             Text(
-                              ' Incorrect password',
+                              ' Incorrect Password',
                               style: TextStyle(
                                 color: Colors.red,
                               ),
@@ -165,7 +160,7 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.redAccent,
+                    backgroundColor: Colors.redAccent,
                     minimumSize: const Size.fromHeight(50),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
