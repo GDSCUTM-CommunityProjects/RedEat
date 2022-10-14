@@ -8,6 +8,28 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+  bool usernameCorrect = true;
+  bool passwordCorrect = true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    usernameCorrect = true;
+    passwordCorrect = true;
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    usernameController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,12 +68,13 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
+                    border: Border.all(color: (usernameCorrect) ? Colors.grey : Colors.red),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: TextField(
+                      controller: usernameController,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: 'Username',
@@ -67,18 +90,71 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
+                    border: Border.all(color: (passwordCorrect) ? Colors.grey : Colors.red),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: TextField(
+                        controller: passwordController,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Password',
                         ),
                         obscureText: true,
                       )
+                  ),
+                ),
+              ),
+            (usernameCorrect && passwordCorrect) ? SizedBox(height: 0) : SizedBox(height: 5),
+
+              // Error messages
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  // decoration: BoxDecoration(
+                  //   border: Border.all(color: (passwordCorrect) ? Colors.grey : Colors.red),
+                  //   borderRadius: BorderRadius.circular(12),
+                  // ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+
+                    children: [
+                      if (!usernameCorrect)
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.error,
+                              color: Colors.red,
+                              size: 14.0,
+                            ),
+                            Text(
+                              ' Incorrect username',
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                color: Colors.red,
+                              ),
+                            ),
+                          ],
+                        ),
+                      if (!passwordCorrect)
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.error,
+                              color: Colors.red,
+                              size: 14.0,
+                            ),
+                            Text(
+                              ' Incorrect password',
+                              style: TextStyle(
+                                color: Colors.red,
+                              ),
+                            ),
+                          ],
+                        ),
+                    ],
                   ),
                 ),
               ),
@@ -95,7 +171,10 @@ class _LoginPageState extends State<LoginPage> {
                       borderRadius: BorderRadius.circular(12),
                     )
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    (usernameController.text == 'username') ? setState(() => usernameCorrect = true ) : setState(() => usernameCorrect = false );
+                    (passwordController.text == 'password') ? setState(() => passwordCorrect = true ) : setState(() => passwordCorrect = false );
+                  },
                   child: Text(
                     'Login',
                     style: TextStyle(fontSize: 24),

@@ -13,10 +13,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/',
       routes: {
-        // Initial route is MyHomePage
-        '/': (context) => MyHomePage(title: 'Flutter Demo Home Page'),
-        // Route for login page
-        '/login': (context) => LoginPage(),
+        '/': (context) => MyHomePage(title: 'Flutter Demo Home Page'),  // Initial route is MyHomePage
+        '/login': (context) => LoginPage(),                             // Route for login page
       },
       title: 'Flutter Demo',
       theme: ThemeData(
