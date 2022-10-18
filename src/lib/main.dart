@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:src/Pages/login.dart';
+import 'Pages/signup.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -13,8 +15,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/',
       routes: {
-        '/': (context) => MyHomePage(title: 'Flutter Demo Home Page'),  // Initial route is MyHomePage
-        '/login': (context) => LoginPage(),                             // Route for login page
+        '/': (context) => const MyHomePage(title: 'Flutter Demo Home Page'),  // Initial route is MyHomePage
+        '/login': (context) => const LoginPage(),                             // Route for login page
+        '/signup': (context) => const SignupPage(),
       },
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -116,6 +119,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, '/login');
               },
               child: const Text('Login'),
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: const TextStyle(fontSize: 20),
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/signup');
+              },
+              child: const Text('Sign Up'),
             )
           ],
         ),

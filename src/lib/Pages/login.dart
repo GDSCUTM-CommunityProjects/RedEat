@@ -179,11 +179,27 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(height: 20,),
 
               // Register Now
-              Text(
-                "Don't have an account yet? Register Now!",
-                style: TextStyle(
-                  color: Colors.grey
-                )
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Don't have an account yet?",
+                    style: TextStyle(
+                      color: Colors.grey
+                    )
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/signup');
+                    },
+                    child: const Text(
+                      'Register Now!',
+                        style: TextStyle(
+                            color: Colors.red,
+                        )
+                    ),
+                  ),
+                ],
               ),
 
             ]
