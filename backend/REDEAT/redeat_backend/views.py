@@ -3,6 +3,7 @@ import json
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from rest_framework_simplejwt.backends import TokenBackend
+from rest_framework_simplejwt.exceptions import TokenBackendError
 
 
 def account(request):
@@ -29,11 +30,11 @@ def account(request):
             return HttpResponse({"message": "Malformed data"},
                                 status=400)
 
-        try:
-            user = User.objects.create_user(username, email=email,
-                                            password=password)
-        except:
+        if User.objects.filter(username=username).exists():
             return HttpResponse(status=403)
+
+        user = User.objects.create_user(username, email=email,
+                                        password=password)
 
         user.first_name = first_name
         user.last_name = last_name
@@ -60,9 +61,7 @@ def verify(request):
 
     token = request.META.get('HTTP_AUTHORIZATION', " ").split(' ')[1]
     try:
-        valid_data = TokenBackend(algorithm='HS256').decode(token, verify=False)
-
-        user = User.objects.get(id=valid_data['user_id'])
+        TokenBackend(algorithm='HS256').decode(token, verify=False)
         return HttpResponse(status=200)
-    except:
+    except TokenBackendError:
         return HttpResponse(status=401)
