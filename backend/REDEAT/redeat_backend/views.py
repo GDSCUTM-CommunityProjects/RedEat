@@ -28,7 +28,7 @@ def account(request):
             password = json_data['password']
         except KeyError:
             # if any params missing
-            return HttpResponse(json_data={"message": "Malformed data"},
+            return HttpResponse({"message": "Malformed data"},
                                 status=400)
 
         try:
@@ -41,7 +41,7 @@ def account(request):
         user.last_name = last_name
         user.save()
 
-        return HttpResponse(json_data={"message": "Success !"}, status=200)
+        return HttpResponse({"message": "Success !"}, status=200)
 
     elif request.method == "PUT":
         # Update Existing User
