@@ -74,7 +74,7 @@ class _MePageState extends State<MePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 7),
               child: Container(
                 width: 60,
                 decoration: BoxDecoration(
@@ -85,6 +85,9 @@ class _MePageState extends State<MePage> {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   child: TextField(
+                    onChanged: (value) => setState(() {
+                      (value.length == 0) ? weight = 0 : weight = double.parse(value);
+                    }),
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: (isLbs) ? "lbs" : "kg",
@@ -96,9 +99,9 @@ class _MePageState extends State<MePage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              padding: const EdgeInsets.symmetric(horizontal: 7),
               child: Container(
-                width: 40,
+                width: 70,
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.redAccent,
@@ -123,7 +126,7 @@ class _MePageState extends State<MePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 7),
               child: Container(
                 width: 60,
                 decoration: BoxDecoration(
@@ -145,7 +148,7 @@ class _MePageState extends State<MePage> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 7),
               child: Container(
                 width: 60,
                 decoration: BoxDecoration(
