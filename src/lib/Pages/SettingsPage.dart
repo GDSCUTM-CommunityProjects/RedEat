@@ -169,7 +169,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                 ),
 
-                // Spacing above confirm button
+                // Spacing for confirm button above
                 (validFirstName && validLastName && validEmail && validUsername && validPassword && validConfirmPassword)
                   ? SizedBox(height: 20,)
                   : SizedBox(height: 20,),

@@ -232,7 +232,7 @@ class _InitialSetupPageState extends State<InitialSetupPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      if (!validHeight)   // Show incorrect Username message if username is incorrect
+                      if (!validHeight)   // Show invalid height message if username is incorrect
                         Row(
                           children: [
                             Icon(
@@ -249,7 +249,7 @@ class _InitialSetupPageState extends State<InitialSetupPage> {
                             ),
                           ],
                         ),
-                      if (!validWeight)   // Show incorrect Password message if password is incorrect
+                      if (!validWeight)   // Show invalid weight message if password is incorrect
                         Row(
                           children: [
                             Icon(

@@ -15,6 +15,7 @@ class Navbar extends StatefulWidget {
 class _NavbarState extends State<Navbar> {
   int index = 0;
 
+  // Screens for each tab in the narbar
   final screens = [
     InitialSetupPage(),
     LoginPage(),
