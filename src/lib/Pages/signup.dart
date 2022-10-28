@@ -59,137 +59,20 @@ class _SignupPageState extends State<SignupPage> {
                     SizedBox(height: 30,),
 
                     // First name input field
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: (validFirstName) ? Colors.grey : Colors.red),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: TextField(
-                              controller: firstNameController,
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'First Name',
-                              ),
-                            )
-                        ),
-                      ),
-                    ),
+                    inputFieldTemplate("First Name", firstNameController, validFirstName),
+                    SizedBox(height: 10,),
+                    inputFieldTemplate("Last Name", lastNameController, validLastName),
+                    SizedBox(height: 10,),
+                    inputFieldTemplate("Username", usernameController, validUsername),
+                    SizedBox(height: 10,),
+                    inputFieldTemplate("Email", emailController, validEmail),
+                    SizedBox(height: 10,),
+                    inputFieldTemplate("Password", passwordController, validPassword),
+                    SizedBox(height: 10,),
+                    inputFieldTemplate("Confirm Password", confirmPasswordController, validConfirmPassword),
                     SizedBox(height: 10,),
 
-                    // Last Name input field
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: (validLastName) ? Colors.grey : Colors.red),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: TextField(
-                              controller: lastNameController,
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'LastName',
-                              ),
-                            )
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10,),
 
-                    // Username input field
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: (validUsername) ? Colors.grey : Colors.red),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: TextField(
-                              controller: usernameController,
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'Username',
-                              ),
-                            )
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10,),
-
-                    // Email input field
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: (validEmail) ? Colors.grey : Colors.red),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: TextField(
-                              controller: emailController,
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'Email',
-                              ),
-                            )
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10,),
-
-                    // Password input field
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: (validPassword) ? Colors.grey : Colors.red),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: TextField(
-                              controller: passwordController,
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'Password',
-                              ),
-                              obscureText: true,
-                            )
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10,),
-
-                    // Confirm Password input field
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: (validConfirmPassword) ? Colors.grey : Colors.red),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: TextField(
-                              controller: confirmPasswordController,
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'Confirm Password',
-                              ),
-                              obscureText: true,
-                            )
-                        ),
-                      ),
-                    ),
                     (validFirstName && validLastName && validUsername && validEmail && validPassword && validConfirmPassword) ? SizedBox(height: 0) : SizedBox(height: 5),
 
                     // Error messages
@@ -200,106 +83,12 @@ class _SignupPageState extends State<SignupPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            if (!validFirstName)   // Show invalid first name message if first name is empty
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.error,
-                                    color: Colors.red,
-                                    size: 14.0,
-                                  ),
-                                  Text(
-                                    ' First Name cannot be empty',
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                      color: Colors.red,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            if (!validLastName)   // Show invalid last name message if last name is empty
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.error,
-                                    color: Colors.red,
-                                    size: 14.0,
-                                  ),
-                                  Text(
-                                    ' Last Name cannot be empty',
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                      color: Colors.red,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            if (!validUsername)   // Show invalid Username message if username is invalid
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.error,
-                                    color: Colors.red,
-                                    size: 14.0,
-                                  ),
-                                  Text(
-                                    ' Username already exists',
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                      color: Colors.red,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            if (!validEmail)   // Show invalid email message if email is invalid
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.error,
-                                    color: Colors.red,
-                                    size: 14.0,
-                                  ),
-                                  Text(
-                                    ' Email already exists',
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                      color: Colors.red,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            if (!validPassword)   // Show invalid Password message if password is invalid
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.error,
-                                    color: Colors.red,
-                                    size: 14.0,
-                                  ),
-                                  Text(
-                                    ' Password must be at least 8 characters long',
-                                    style: TextStyle(
-                                      color: Colors.red,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            if (!validConfirmPassword)   // Show invalid confirm password message if confirm password is not identical to Password
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.error,
-                                    color: Colors.red,
-                                    size: 14.0,
-                                  ),
-                                  Text(
-                                    ' Passwords must be identical',
-                                    style: TextStyle(
-                                      color: Colors.red,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                            if (!validFirstName) errorMessageTemplate("First Name cannot be empty"),
+                            if (!validLastName)  errorMessageTemplate("Last Name cannot be empty"),
+                            if (!validUsername) errorMessageTemplate("Username already exists"),
+                            if (!validEmail) errorMessageTemplate("Email already exists"),
+                            if (!validPassword)  errorMessageTemplate("Password must be at least 8 characters long"),
+                            if (!validConfirmPassword)  errorMessageTemplate("Passwords must be identical"),
                           ],
                         ),
                       ),
@@ -343,6 +132,48 @@ class _SignupPageState extends State<SignupPage> {
               ),
             )
         )
+    );
+  }
+
+  Widget inputFieldTemplate(String fieldName, TextEditingController controller, bool valid) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: (valid) ? Colors.grey : Colors.red),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: TextField(
+              obscureText: (fieldName == "Password" || fieldName == "Confirm Password"),
+              controller: controller,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: fieldName,
+              ),
+            )
+        ),
+      ),
+    );
+  }
+
+  Widget errorMessageTemplate(String message) {
+    return Row(
+      children: [
+        Icon(
+          Icons.error,
+          color: Colors.red,
+          size: 14.0,
+        ),
+        Text(
+          ' ' + message,
+          textAlign: TextAlign.start,
+          style: TextStyle(
+            color: Colors.red,
+          ),
+        ),
+      ],
     );
   }
 }
