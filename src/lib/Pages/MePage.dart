@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:expandable/expandable.dart';
+import 'package:src/Visual%20Components/FormComponents/MetricField.dart';
 
 import '../Visual Components/Buttons/ConversionButton.dart';
 
@@ -150,36 +151,17 @@ class _MePageState extends State<MePage> {
                       children: [
                         Container(
                           child: Row(children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 7),
-                              child: Container(
-                                width: 60,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: (weight > 0)
-                                          ? Colors.grey
-                                          : Colors.red),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 10),
-                                  child: TextField(
-                                    onChanged: (value) => setState(() {
-                                      setState(() => toSave = true);
-                                      (value.length == 0)
-                                          ? weight = 0
-                                          : weight = int.parse(value);
-                                      setBMI();
-                                    }),
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      hintText: (isLbs) ? "lbs" : "kg",
-                                    ),
-                                    controller: weightTextController,
-                                    keyboardType: TextInputType.number,
-                                  ),
-                                ),
-                              ),
+                            MetricField(
+                              controller: weightTextController,
+                              color: (weight > 0) ? Colors.grey : Colors.red,
+                              text: (isLbs) ? "lbs" : "kg",
+                              onChange: (value) => setState(() {
+                                setState(() => toSave = true);
+                                (value.length == 0)
+                                    ? weight = 0
+                                    : weight = int.parse(value);
+                                setBMI();
+                              }),
                             ),
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 5),
@@ -195,11 +177,11 @@ class _MePageState extends State<MePage> {
                           child: Container(
                             width: 70,
                             child: ConversionButton(
-                                buttonTitle: (isLbs) ? "kg" : "lbs",
-                                onPressed: () {
-                                  setState(() => isLbs = !(isLbs));
-                                  changeToOtherUnit(true);
-                                },
+                              buttonTitle: (isLbs) ? "kg" : "lbs",
+                              onPressed: () {
+                                setState(() => isLbs = !(isLbs));
+                                changeToOtherUnit(true);
+                              },
                             ),
                           ),
                         ),
@@ -216,55 +198,32 @@ class _MePageState extends State<MePage> {
                       children: [
                         Container(
                           child: Row(children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 7),
-                              child: Container(
-                                width: 60,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: (height > 0)
-                                          ? Colors.grey
-                                          : Colors.red),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 10),
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      hintText:
-                                          (heightCoversion == 12) ? "ft" : "m",
-                                    ),
-                                    onChanged: (value) async {
-                                      setState(() => toSave = true);
-                                      if (heightTextControllerUnit2
-                                          .text.isEmpty) {
-                                        setState(() {
-                                          (value.length == 0)
-                                              ? height = 0
-                                              : height = int.parse(value);
-                                        });
-                                        setBMI();
-                                      } else {
-                                        setState(() {
-                                          (value.length == 0)
-                                              ? height = int.parse(
-                                                  heightTextControllerUnit2
-                                                      .text)
-                                              : height = int.parse(value) *
-                                                      heightCoversion +
-                                                  int.parse(
-                                                      heightTextControllerUnit2
-                                                          .text);
-                                        });
-                                        setBMI();
-                                      }
-                                    },
-                                    controller: heightTextControllerUnit1,
-                                    keyboardType: TextInputType.number,
-                                  ),
-                                ),
-                              ),
+                            MetricField(
+                              controller: heightTextControllerUnit1,
+                              color: (height > 0) ? Colors.grey : Colors.red,
+                              text: (heightCoversion == 12) ? "ft" : "m",
+                              onChange: (value) async {
+                                setState(() => toSave = true);
+                                if (heightTextControllerUnit2.text.isEmpty) {
+                                  setState(() {
+                                    (value.length == 0)
+                                        ? height = 0
+                                        : height = int.parse(value);
+                                  });
+                                  setBMI();
+                                } else {
+                                  setState(() {
+                                    (value.length == 0)
+                                        ? height = int.parse(
+                                            heightTextControllerUnit2.text)
+                                        : height = int.parse(value) *
+                                                heightCoversion +
+                                            int.parse(
+                                                heightTextControllerUnit2.text);
+                                  });
+                                  setBMI();
+                                }
+                              },
                             ),
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 5),
@@ -278,60 +237,38 @@ class _MePageState extends State<MePage> {
                         Container(
                           child: Row(
                             children: [
-                              Padding(
-                                // Smaller unit (cm or in)
-                                padding: EdgeInsets.symmetric(horizontal: 7),
-                                child: Container(
-                                  width: 60,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: (height > 0)
-                                            ? Colors.grey
-                                            : Colors.red),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 10),
-                                    child: TextField(
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: (heightCoversion == 12)
-                                            ? "in"
-                                            : "cm",
-                                      ),
-                                      onChanged: (value) async {
-                                        setState(() => toSave = true);
-                                        if (heightTextControllerUnit1
-                                            .text.isEmpty) {
-                                          setState(() {
-                                            (value.length == 0)
-                                                ? height = 0
-                                                : height = int.parse(value);
-                                          });
-                                          setBMI();
-                                        } else {
-                                          setState(() {
-                                            (value.length == 0)
-                                                ? height = int.parse(
-                                                        heightTextControllerUnit1
-                                                            .text) *
-                                                    heightCoversion
-                                                : height = int.parse(
-                                                            heightTextControllerUnit1
-                                                                .text) *
-                                                        heightCoversion +
-                                                    int.parse(value);
-                                          });
-                                          setBMI();
-                                        }
-                                      },
-                                      controller: heightTextControllerUnit2,
-                                      keyboardType: TextInputType.number,
-                                    ),
-                                  ),
-                                ),
+                              // Smaller unit (cm or in)
+                              MetricField(
+                                controller: heightTextControllerUnit2,
+                                color: (height > 0) ? Colors.grey : Colors.red,
+                                text: (heightCoversion == 12) ? "in" : "cm",
+                                onChange: (value) async {
+                                  setState(() => toSave = true);
+                                  if (heightTextControllerUnit1.text.isEmpty) {
+                                    setState(() {
+                                      (value.length == 0)
+                                          ? height = 0
+                                          : height = int.parse(value);
+                                    });
+                                    setBMI();
+                                  } else {
+                                    setState(() {
+                                      (value.length == 0)
+                                          ? height = int.parse(
+                                                  heightTextControllerUnit1
+                                                      .text) *
+                                              heightCoversion
+                                          : height = int.parse(
+                                                      heightTextControllerUnit1
+                                                          .text) *
+                                                  heightCoversion +
+                                              int.parse(value);
+                                    });
+                                    setBMI();
+                                  }
+                                },
                               ),
+
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 5),
                                 child: Text(
@@ -345,19 +282,17 @@ class _MePageState extends State<MePage> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 7),
                           child: Container(
-                            width: 70,
-                            child: ConversionButton(
-                                buttonTitle: (heightCoversion == 12) ? "m" : "ft",
-                              
+                              width: 70,
+                              child: ConversionButton(
+                                buttonTitle:
+                                    (heightCoversion == 12) ? "m" : "ft",
                                 onPressed: () {
                                   setState(() => (heightCoversion == 12)
                                       ? heightCoversion = 100
                                       : heightCoversion = 12);
                                   changeToOtherUnit(false);
                                 },
-
-                              )
-                          ),
+                              )),
                         ),
                       ],
                     ),
