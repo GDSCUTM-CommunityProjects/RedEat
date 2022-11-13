@@ -30,39 +30,18 @@ def get_product_suggestions_from_name(name: str) -> dict:
     return product_info.json()["hits"]
 
 
-def get_top_hit_from_name(name: str) -> dict:
-    """
-    Queries the Nutritionix Database and returns the top hit found based on
-    product name.
-
-    :param name: product name
-    :return: "item_name", "brand_name", "item_id" of the products
-    """
-
-    top_five = get_product_suggestions_from_name(name)
-    if not top_five:
-        # not products found
-        return {}
-    top_hit = top_five[0]
-
-    product_info = get_product_info_from_item_exact_name(top_hit["item_name"], top_hit["brand_name"])
-
-    return product_info
-
-
-def get_product_info_from_item_exact_name(item_name: str, brand_name:str) -> dict:
+def get_product_info_from_item_exact_name(item_name: str) -> dict:
     """
     returns all the product info from Nutritionix database given the item_id
     associated with the product
     :param item_name: Exact item name from Nutritionix Database
-    :param brand_name: Exact brand name from Nutritionix Database
     :return: Dict containing product information
     """
     header = {"Content-Type": "application/json"}
     data = {"appId": APP_ID,
             "appKey": APP_KEY,
             "limit": 1,
-            "queries": {"item_name": item_name, "brand_name": brand_name},
+            "queries": {"item_name": item_name},
             "filters": {"item_type": 2},
             "fields": ["brand_name",
                        "item_name",
@@ -102,7 +81,7 @@ def get_product_info_from_item_exact_name(item_name: str, brand_name:str) -> dic
 
     product_info = requests.post(url=NUTRITIONIX_URL, headers=header, json=data)
 
-    return product_info.json()[0]
+    return product_info.json()['hits'][0]
 
 
 def get_product_name_from_upc(upc: str) -> str:
