@@ -25,5 +25,6 @@ urlpatterns = [
     path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(),
          name="token_refresh"),
     path('api/account/', backend_views.account, name="account"),
-    path('api/verify/', backend_views.verify, name="verify")
+    path('api/verify/', backend_views.verify, name="verify"),
+    path('api/search_product', backend_views.search_product, name="search_product")
 ]
