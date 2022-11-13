@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from rest_framework_simplejwt.backends import TokenBackend
 from rest_framework_simplejwt.exceptions import TokenBackendError
 
+import Cache
 
 def account(request):
     """
@@ -85,7 +86,7 @@ def search_product(request):
             return HttpResponse({"Malformed Request"},
                                 status=400)
 
-        #call the hidden function here
+        # call the hidden function here
 
         product_information = get_data(upc, product_name)
         return JsonResponse(product_information)
@@ -96,9 +97,8 @@ def search_product(request):
         return HttpResponse(status=400)
 
 
-
 def get_data(upc, product_name):
     """
     Place holder ment to hold place for cacheing function 
     """
-    return {}
+    return Cache.get_product_info(upc, product_name)
