@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:expandable/expandable.dart';
+import 'package:src/Visual%20Components/FormComponents/CollapsableText.dart';
+import 'package:src/Visual%20Components/FormComponents/MeasurementIndexBox.dart';
 import 'package:src/Visual%20Components/FormComponents/MetricField.dart';
 
 import '../Visual Components/Buttons/ConversionButton.dart';
@@ -107,144 +109,106 @@ class _MePageState extends State<MePage> {
         backgroundColor: Colors.red,
         title: Text("About Me"),
       ),
-      body: Column(children: [
-        SizedBox(
-          height: 20,
-        ),
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 15),
-          child: Text(
-            "Q. Garcia",
-            style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+      body: SingleChildScrollView(
+        child: Column(children: [
+          SizedBox(
+            height: 20,
           ),
-        ),
-        const Icon(
-          Icons.account_circle,
-          color: Colors.grey,
-          size: 80,
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Center(
-          child: Container(
-            width: MediaQuery.of(context).size.width * 0.9,
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 20),
-              child: ExpandableNotifier(
-                child: ExpandablePanel(
-                  header: Text("Your body measurements"),
-                  collapsed: Text(
-                      "Please input your body measurements if you're comfortable with sharing"),
-                  expanded:
-                      // Change weight text fields
-                      Column(children: [
-                    Text(
-                        "Please input your body measurements if you're comfortable with sharing"),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 15),
+            child: Text(
+              "Q. Garcia",
+              style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.red),
+            ),
+          ),
+          const Icon(
+            Icons.account_circle,
+            color: Colors.grey,
+            size: 100,
+          ),
+          SizedBox(
+            height: 25,
+          ),
+          Center(
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 5),
+                child: ExpandableNotifier(
+                  child: ExpandablePanel(
+                    header: CollapsableText(isTitle: true, text: "My body measurements",),
+                    collapsed: CollapsableText(text: 
+                    "Please input your body measurements if you're comfortable with sharing",),
+                    expanded:
+                        // Change weight text fields
+                        Column(children: [
+                      CollapsableText(text: "Please input your body measurements if you're comfortable with sharing", onExpanded: true,),
 
-                    SizedBox(
-                      height: 20,
-                    ),
+                      SizedBox(
+                        height: 10,
+                      ),
 
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          child: Row(children: [
-                            MetricField(
-                              controller: weightTextController,
-                              color: (weight > 0) ? Colors.grey : Colors.red,
-                              text: (isLbs) ? "lbs" : "kg",
-                              onChange: (value) => setState(() {
-                                setState(() => toSave = true);
-                                (value.length == 0)
-                                    ? weight = 0
-                                    : weight = int.parse(value);
-                                setBMI();
-                              }),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 5),
-                              child: Text(
-                                (isLbs) ? ("lbs") : ("kg"),
-                                style: TextStyle(fontSize: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text("Weight: "),
+                          Container(
+                            child: Row(children: [
+                              MetricField(
+                                controller: weightTextController,
+                                color: (weight > 0) ? Colors.grey : Colors.red,
+                                text: (isLbs) ? "lbs" : "kg",
+                                onChange: (value) => setState(() {
+                                  setState(() => toSave = true);
+                                  (value.length == 0)
+                                      ? weight = 0
+                                      : weight = int.parse(value);
+                                  setBMI();
+                                }),
                               ),
-                            ),
-                          ]),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 7),
-                          child: Container(
-                            width: 70,
-                            child: ConversionButton(
-                              buttonTitle: (isLbs) ? "kg" : "lbs",
-                              onPressed: () {
-                                setState(() => isLbs = !(isLbs));
-                                changeToOtherUnit(true);
-                              },
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 5),
+                                child: Text(
+                                  (isLbs) ? ("lbs") : ("kg"),
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                              ),
+                            ]),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 7),
+                            child: Container(
+                              width: 70,
+                              child: ConversionButton(
+                                buttonTitle: (isLbs) ? "kg" : "lbs",
+                                onPressed: () {
+                                  setState(() => isLbs = !(isLbs));
+                                  changeToOtherUnit(true);
+                                },
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
 
-                    // Change height fields
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      // Larger unit (m or ft)
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          child: Row(children: [
-                            MetricField(
-                              controller: heightTextControllerUnit1,
-                              color: (height > 0) ? Colors.grey : Colors.red,
-                              text: (heightCoversion == 12) ? "ft" : "m",
-                              onChange: (value) async {
-                                setState(() => toSave = true);
-                                if (heightTextControllerUnit2.text.isEmpty) {
-                                  setState(() {
-                                    (value.length == 0)
-                                        ? height = 0
-                                        : height = int.parse(value);
-                                  });
-                                  setBMI();
-                                } else {
-                                  setState(() {
-                                    (value.length == 0)
-                                        ? height = int.parse(
-                                            heightTextControllerUnit2.text)
-                                        : height = int.parse(value) *
-                                                heightCoversion +
-                                            int.parse(
-                                                heightTextControllerUnit2.text);
-                                  });
-                                  setBMI();
-                                }
-                              },
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 5),
-                              child: Text(
-                                (heightCoversion == 12) ? ("ft") : ("m"),
-                                style: TextStyle(fontSize: 20),
-                              ),
-                            ),
-                          ]),
-                        ),
-                        Container(
-                          child: Row(
-                            children: [
-                              // Smaller unit (cm or in)
+                      // Change height fields
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        // Larger unit (m or ft)
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text("Height: "),
+                          Container(
+                            child: Row(children: [
                               MetricField(
-                                controller: heightTextControllerUnit2,
+                                controller: heightTextControllerUnit1,
                                 color: (height > 0) ? Colors.grey : Colors.red,
-                                text: (heightCoversion == 12) ? "in" : "cm",
+                                text: (heightCoversion == 12) ? "ft" : "m",
                                 onChange: (value) async {
                                   setState(() => toSave = true);
-                                  if (heightTextControllerUnit1.text.isEmpty) {
+                                  if (heightTextControllerUnit2.text.isEmpty) {
                                     setState(() {
                                       (value.length == 0)
                                           ? height = 0
@@ -255,88 +219,127 @@ class _MePageState extends State<MePage> {
                                     setState(() {
                                       (value.length == 0)
                                           ? height = int.parse(
-                                                  heightTextControllerUnit1
-                                                      .text) *
-                                              heightCoversion
-                                          : height = int.parse(
-                                                      heightTextControllerUnit1
-                                                          .text) *
+                                              heightTextControllerUnit2.text)
+                                          : height = int.parse(value) *
                                                   heightCoversion +
-                                              int.parse(value);
+                                              int.parse(
+                                                  heightTextControllerUnit2
+                                                      .text);
                                     });
                                     setBMI();
                                   }
                                 },
                               ),
-
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 5),
                                 child: Text(
-                                  (heightCoversion == 12) ? ("in") : ("cm"),
+                                  (heightCoversion == 12) ? ("ft") : ("m"),
                                   style: TextStyle(fontSize: 20),
                                 ),
                               ),
-                            ],
+                            ]),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 7),
-                          child: Container(
-                              width: 70,
-                              child: ConversionButton(
-                                buttonTitle:
-                                    (heightCoversion == 12) ? "m" : "ft",
-                                onPressed: () {
-                                  setState(() => (heightCoversion == 12)
-                                      ? heightCoversion = 100
-                                      : heightCoversion = 12);
-                                  changeToOtherUnit(false);
-                                },
-                              )),
-                        ),
-                      ],
-                    ),
-                  ]),
+                          Container(
+                            child: Row(
+                              children: [
+                                // Smaller unit (cm or in)
+                                MetricField(
+                                  controller: heightTextControllerUnit2,
+                                  color:
+                                      (height > 0) ? Colors.grey : Colors.red,
+                                  text: (heightCoversion == 12) ? "in" : "cm",
+                                  onChange: (value) async {
+                                    setState(() => toSave = true);
+                                    if (heightTextControllerUnit1
+                                        .text.isEmpty) {
+                                      setState(() {
+                                        (value.length == 0)
+                                            ? height = 0
+                                            : height = int.parse(value);
+                                      });
+                                      setBMI();
+                                    } else {
+                                      setState(() {
+                                        (value.length == 0)
+                                            ? height = int.parse(
+                                                    heightTextControllerUnit1
+                                                        .text) *
+                                                heightCoversion
+                                            : height = int.parse(
+                                                        heightTextControllerUnit1
+                                                            .text) *
+                                                    heightCoversion +
+                                                int.parse(value);
+                                      });
+                                      setBMI();
+                                    }
+                                  },
+                                ),
+
+                                Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 5),
+                                  child: Text(
+                                    (heightCoversion == 12) ? ("in") : ("cm"),
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 7),
+                            child: Container(
+                                width: 70,
+                                child: ConversionButton(
+                                  buttonTitle:
+                                      (heightCoversion == 12) ? "m" : "ft",
+                                  onPressed: () {
+                                    setState(() => (heightCoversion == 12)
+                                        ? heightCoversion = 100
+                                        : heightCoversion = 12);
+                                    changeToOtherUnit(false);
+                                  },
+                                )),
+                          ),
+                        ],
+                      ),
+                    ]),
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 10),
-          child: Text("Your BMI is"),
-        ),
-        Text(
-          (BMI).toStringAsFixed(2),
-          style: TextStyle(fontSize: 60, fontWeight: FontWeight.bold),
-        ),
-        if (toSave)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 25),
-            child: Container(
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.redAccent,
-                      minimumSize: const Size.fromHeight(50),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      )),
-                  onPressed: () {
-                    setState(() => (heightCoversion == 12)
-                        ? heightCoversion = 100
-                        : heightCoversion = 12);
-                    changeToOtherUnit(false);
-                  },
-                  child: Text(
-                    "Save",
-                    style: TextStyle(fontSize: 24),
-                  )),
-            ),
+          SizedBox(
+            height: 20,
           ),
-      ]),
+          if (weight > 0 && height > 0)
+            MeasurementIndexBox(indexName: "BMI", indexValue: (BMI).toStringAsFixed(2)),
+            
+          if (toSave)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 25),
+              child: Container(
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.redAccent,
+                        minimumSize: const Size.fromHeight(50),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        )),
+                    onPressed: () {
+                      setState(() => (heightCoversion == 12)
+                          ? heightCoversion = 100
+                          : heightCoversion = 12);
+                      changeToOtherUnit(false);
+                    },
+                    child: Text(
+                      "Save",
+                      style: TextStyle(fontSize: 24),
+                    )),
+              ),
+            ),
+        ]),
+      ),
     );
   }
 }
