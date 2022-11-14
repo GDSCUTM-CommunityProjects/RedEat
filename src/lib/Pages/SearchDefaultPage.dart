@@ -60,7 +60,7 @@ class _SearchDefaultPageState extends State<SearchDefaultPage> {
               // // SizedBox(height: 30),
 
               SizedBox(height: 50,),
-              searchOptionButton(context, Icons.qr_code_scanner, "Scan Barcode", "/login"),
+              searchOptionButton(context, Icons.qr_code_scanner, "Scan Barcode", "/barcodeScanner"),
               SizedBox(height: 20,),
               searchOptionButton(context, Icons.search, "Search by name", "/login"),
               SizedBox(height: 20,),

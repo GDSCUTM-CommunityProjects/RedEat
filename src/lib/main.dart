@@ -4,6 +4,7 @@ import 'package:src/Pages/signup.dart';
 import 'package:src/Pages/InitialSetupPage.dart';
 import 'package:src/Pages/SettingsPage.dart';
 import 'package:src/Navbar.dart';
+import 'package:src/Pages/BarcodeScanner.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
         '/intialSetup': (context) => const InitialSetupPage(),
         '/settings': (context) => const SettingsPage(),
         '/navbar': (context) => const Navbar(),
+        '/barcodeScanner': (context) => BarCodeScanner(),
       },
       title: 'Flutter Demo',
       theme: ThemeData(
