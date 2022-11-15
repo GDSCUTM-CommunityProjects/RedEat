@@ -68,8 +68,13 @@ class _MePageState extends State<MePage> {
     BMI = BMIweight / pow(BMIheight / 100, 2);
   }
 
-  void editBodyMeasurements(){
-    
+  void editHeightVal(String changedHeight) {
+    setState(() {
+      (changedHeight.length == 0)
+          ? height = 0
+          : height = int.parse(changedHeight);
+    });
+    setBMI();
   }
 
   void changeToOtherUnit(bool changeWeight) {
@@ -276,12 +281,7 @@ class _MePageState extends State<MePage> {
                             onChange: (value) async {
                               setState(() => toSave = true);
                               if (heightTextControllerUnit2.text.isEmpty) {
-                                setState(() {
-                                  (value.length == 0)
-                                      ? height = 0
-                                      : height = int.parse(value);
-                                });
-                                setBMI();
+                                editHeightVal(value);
                               } else {
                                 setState(() {
                                   (value.length == 0)
@@ -316,12 +316,7 @@ class _MePageState extends State<MePage> {
                               onChange: (value) async {
                                 setState(() => toSave = true);
                                 if (heightTextControllerUnit1.text.isEmpty) {
-                                  setState(() {
-                                    (value.length == 0)
-                                        ? height = 0
-                                        : height = int.parse(value);
-                                  });
-                                  setBMI();
+                                  editHeightVal(value);
                                 } else {
                                   setState(() {
                                     (value.length == 0)
