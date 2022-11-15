@@ -387,9 +387,9 @@ class _MePageState extends State<MePage> {
             MeasurementIndexBox(
                 indexName: "BMI", indexValue: (BMI).toStringAsFixed(2)),
           // Save button for when backend integration is implemented
-          if (toSave)
+          if (toSave && weight > 0 && height > 0)
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 25),
+              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 35),
               child: Container(
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
