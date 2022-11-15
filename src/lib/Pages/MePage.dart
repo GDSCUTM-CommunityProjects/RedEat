@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:expandable/expandable.dart';
+import 'package:src/Visual%20Components/Buttons/GoalButton.dart';
 import 'package:src/Visual%20Components/FormComponents/CollapsableText.dart';
 import 'package:src/Visual%20Components/FormComponents/MeasurementIndexBox.dart';
 import 'package:src/Visual%20Components/FormComponents/MetricField.dart';
@@ -26,6 +27,7 @@ class _MePageState extends State<MePage> {
   int heightCoversion = 12;
   bool isLbs = true;
   bool toSave = false;
+  final goalList = ["Gain Weight", "Maintain Weight", "Lose Weight"];
 
   @override
   void initState() {
@@ -118,7 +120,8 @@ class _MePageState extends State<MePage> {
             padding: EdgeInsets.symmetric(vertical: 15),
             child: Text(
               "Q. Garcia",
-              style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.red),
+              style: TextStyle(
+                  fontSize: 40, fontWeight: FontWeight.bold, color: Colors.red),
             ),
           ),
           const Icon(
@@ -136,13 +139,82 @@ class _MePageState extends State<MePage> {
                 padding: EdgeInsets.symmetric(vertical: 5),
                 child: ExpandableNotifier(
                   child: ExpandablePanel(
-                    header: CollapsableText(isTitle: true, text: "My body measurements",),
-                    collapsed: CollapsableText(text: 
-                    "Please input your body measurements if you're comfortable with sharing",),
+                    header: CollapsableText(
+                      isTitle: true,
+                      text: "My Goals",
+                    ),
+                    collapsed: CollapsableText(
+                      text: "Edit your goals",
+                    ),
                     expanded:
                         // Change weight text fields
                         Column(children: [
-                      CollapsableText(text: "Please input your body measurements if you're comfortable with sharing", onExpanded: true,),
+                      CollapsableText(
+                        text: "Edit your goals for your weight and health. You want to ...",
+                        onExpanded: true,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Container(
+                              width: 120,
+                              child: GoalButton(
+                                onPressed: () {},
+                                buttonTitle: goalList[0],
+                              ),
+                            ),
+                            Container(
+                              width: 120,
+                              child: GoalButton(
+                                onPressed: () {},
+                                buttonTitle: goalList[1],
+                                
+                              ),
+                            ),
+                            Container(
+                              width: 120,
+                              child: GoalButton(
+                                onPressed: () {},
+                                buttonTitle: goalList[2],
+                              ),
+                            )
+                          ],
+                        ),
+                      )
+                    ]),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Center(
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 5),
+                child: ExpandableNotifier(
+                  child: ExpandablePanel(
+                    header: CollapsableText(
+                      isTitle: true,
+                      text: "My body measurements",
+                    ),
+                    collapsed: CollapsableText(
+                      text:
+                          "Please input your body measurements if you're comfortable with sharing",
+                    ),
+                    expanded:
+                        // Change weight text fields
+                        Column(children: [
+                      CollapsableText(
+                        text:
+                            "Please input your body measurements if you're comfortable with sharing",
+                        onExpanded: true,
+                      ),
 
                       SizedBox(
                         height: 10,
@@ -313,8 +385,8 @@ class _MePageState extends State<MePage> {
             height: 20,
           ),
           if (weight > 0 && height > 0)
-            MeasurementIndexBox(indexName: "BMI", indexValue: (BMI).toStringAsFixed(2)),
-            
+            MeasurementIndexBox(
+                indexName: "BMI", indexValue: (BMI).toStringAsFixed(2)),
           if (toSave)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 25),

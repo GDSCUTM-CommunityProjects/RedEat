@@ -6,6 +6,8 @@ class BaseButtonTemplate extends StatelessWidget {
   final GestureTapCallback onPressed;
   final String buttonTitle;
   Color color;
+  Color borderColor;
+  double borderWeight;
   double borderRadius;
   double height;
   double fontSize;
@@ -16,6 +18,8 @@ class BaseButtonTemplate extends StatelessWidget {
     super.key,
     required this.onPressed,
     required this.buttonTitle,
+    this.borderColor = Colors.transparent,
+    this.borderWeight = 0,
     this.color = Colors.red,
     this.borderRadius = 12.0,
     this.height = 50.0,
@@ -32,12 +36,14 @@ class BaseButtonTemplate extends StatelessWidget {
       style: ElevatedButton.styleFrom(
           backgroundColor: color,
           minimumSize: Size.fromHeight(height),
+          side: BorderSide(color: borderColor, width: borderWeight),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius),
           )),
       onPressed: onPressed,
       child: Text(
         buttonTitle,
+        textAlign: TextAlign.center,
         style: TextStyle(
           fontSize: fontSize,
           fontWeight: boldness,

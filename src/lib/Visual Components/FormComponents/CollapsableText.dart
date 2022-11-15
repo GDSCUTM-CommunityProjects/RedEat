@@ -27,6 +27,7 @@ class CollapsableText extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Text(
           text,
+          textAlign: TextAlign.left,
         ),
       );
     } else{
