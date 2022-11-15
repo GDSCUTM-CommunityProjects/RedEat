@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:expandable/expandable.dart';
 import 'package:src/Visual%20Components/Buttons/GoalButton.dart';
+import 'package:src/Visual%20Components/FormComponents/CollapsableSection.dart';
 import 'package:src/Visual%20Components/FormComponents/CollapsableText.dart';
 import 'package:src/Visual%20Components/FormComponents/MeasurementIndexBox.dart';
 import 'package:src/Visual%20Components/FormComponents/MetricField.dart';
@@ -65,6 +66,10 @@ class _MePageState extends State<MePage> {
         ? (BMIheight = (height * 2.54).round())
         : (BMIheight = height);
     BMI = BMIweight / pow(BMIheight / 100, 2);
+  }
+
+  void editBodyMeasurements(){
+    
   }
 
   void changeToOtherUnit(bool changeWeight) {
@@ -132,252 +137,236 @@ class _MePageState extends State<MePage> {
           SizedBox(
             height: 25,
           ),
-          Center(
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.9,
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 5),
-                child: ExpandableNotifier(
-                  child: ExpandablePanel(
-                    header: CollapsableText(
-                      isTitle: true,
-                      text: "My Goals",
-                    ),
-                    collapsed: CollapsableText(
-                      text: "Edit your goals",
-                    ),
-                    expanded:
-                        // Change weight text fields
-                        Column(children: [
-                      CollapsableText(
-                        text: "Edit your goals for your weight and health. You want to ...",
-                        onExpanded: true,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              width: 120,
-                              child: GoalButton(
-                                onPressed: () {},
-                                buttonTitle: goalList[0],
-                              ),
-                            ),
-                            Container(
-                              width: 120,
-                              child: GoalButton(
-                                onPressed: () {},
-                                buttonTitle: goalList[1],
-                                
-                              ),
-                            ),
-                            Container(
-                              width: 120,
-                              child: GoalButton(
-                                onPressed: () {},
-                                buttonTitle: goalList[2],
-                              ),
-                            )
-                          ],
-                        ),
-                      )
-                    ]),
-                  ),
+          CollapsableSection(
+            sectionChild: ExpandableNotifier(
+              child: ExpandablePanel(
+                header: CollapsableText(
+                  isTitle: true,
+                  text: "My Goals",
                 ),
+                collapsed: CollapsableText(
+                  text: "Edit your goals",
+                ),
+                expanded:
+                    // Change weight text fields
+                    Column(children: [
+                  CollapsableText(
+                    text:
+                        "Edit your goals for your weight and health. You want to ...",
+                    onExpanded: true,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          width: 120,
+                          child: GoalButton(
+                            onPressed: () {},
+                            buttonTitle: goalList[0],
+                          ),
+                        ),
+                        Container(
+                          width: 120,
+                          child: GoalButton(
+                            onPressed: () {},
+                            buttonTitle: goalList[1],
+                          ),
+                        ),
+                        Container(
+                          width: 120,
+                          child: GoalButton(
+                            onPressed: () {},
+                            buttonTitle: goalList[2],
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ]),
               ),
             ),
           ),
-          Center(
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.9,
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 5),
-                child: ExpandableNotifier(
-                  child: ExpandablePanel(
-                    header: CollapsableText(
-                      isTitle: true,
-                      text: "My body measurements",
-                    ),
-                    collapsed: CollapsableText(
-                      text:
-                          "Please input your body measurements if you're comfortable with sharing",
-                    ),
-                    expanded:
-                        // Change weight text fields
-                        Column(children: [
-                      CollapsableText(
-                        text:
-                            "Please input your body measurements if you're comfortable with sharing",
-                        onExpanded: true,
-                      ),
+          CollapsableSection(
+            sectionChild: ExpandableNotifier(
+              child: ExpandablePanel(
+                header: CollapsableText(
+                  isTitle: true,
+                  text: "My body measurements",
+                ),
+                collapsed: CollapsableText(
+                  text:
+                      "Please input your body measurements if you're comfortable with sharing",
+                ),
+                expanded:
+                    // Change weight text fields
+                    Column(children: [
+                  CollapsableText(
+                    text:
+                        "Please input your body measurements if you're comfortable with sharing",
+                    onExpanded: true,
+                  ),
 
-                      SizedBox(
-                        height: 10,
-                      ),
+                  SizedBox(
+                    height: 10,
+                  ),
 
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text("Weight: "),
-                          Container(
-                            child: Row(children: [
-                              MetricField(
-                                controller: weightTextController,
-                                color: (weight > 0) ? Colors.grey : Colors.red,
-                                text: (isLbs) ? "lbs" : "kg",
-                                onChange: (value) => setState(() {
-                                  setState(() => toSave = true);
-                                  (value.length == 0)
-                                      ? weight = 0
-                                      : weight = int.parse(value);
-                                  setBMI();
-                                }),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 5),
-                                child: Text(
-                                  (isLbs) ? ("lbs") : ("kg"),
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                              ),
-                            ]),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text("Weight: "),
+                      Container(
+                        child: Row(children: [
+                          MetricField(
+                            controller: weightTextController,
+                            color: (weight > 0) ? Colors.grey : Colors.red,
+                            text: (isLbs) ? "lbs" : "kg",
+                            onChange: (value) => setState(() {
+                              setState(() => toSave = true);
+                              (value.length == 0)
+                                  ? weight = 0
+                                  : weight = int.parse(value);
+                              setBMI();
+                            }),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 7),
-                            child: Container(
-                              width: 70,
-                              child: ConversionButton(
-                                buttonTitle: (isLbs) ? "kg" : "lbs",
-                                onPressed: () {
-                                  setState(() => isLbs = !(isLbs));
-                                  changeToOtherUnit(true);
-                                },
-                              ),
+                            padding: EdgeInsets.symmetric(horizontal: 5),
+                            child: Text(
+                              (isLbs) ? ("lbs") : ("kg"),
+                              style: TextStyle(fontSize: 20),
                             ),
                           ),
-                        ],
+                        ]),
                       ),
-
-                      // Change height fields
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Row(
-                        // Larger unit (m or ft)
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text("Height: "),
-                          Container(
-                            child: Row(children: [
-                              MetricField(
-                                controller: heightTextControllerUnit1,
-                                color: (height > 0) ? Colors.grey : Colors.red,
-                                text: (heightCoversion == 12) ? "ft" : "m",
-                                onChange: (value) async {
-                                  setState(() => toSave = true);
-                                  if (heightTextControllerUnit2.text.isEmpty) {
-                                    setState(() {
-                                      (value.length == 0)
-                                          ? height = 0
-                                          : height = int.parse(value);
-                                    });
-                                    setBMI();
-                                  } else {
-                                    setState(() {
-                                      (value.length == 0)
-                                          ? height = int.parse(
-                                              heightTextControllerUnit2.text)
-                                          : height = int.parse(value) *
-                                                  heightCoversion +
-                                              int.parse(
-                                                  heightTextControllerUnit2
-                                                      .text);
-                                    });
-                                    setBMI();
-                                  }
-                                },
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 5),
-                                child: Text(
-                                  (heightCoversion == 12) ? ("ft") : ("m"),
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                              ),
-                            ]),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 7),
+                        child: Container(
+                          width: 70,
+                          child: ConversionButton(
+                            buttonTitle: (isLbs) ? "kg" : "lbs",
+                            onPressed: () {
+                              setState(() => isLbs = !(isLbs));
+                              changeToOtherUnit(true);
+                            },
                           ),
-                          Container(
-                            child: Row(
-                              children: [
-                                // Smaller unit (cm or in)
-                                MetricField(
-                                  controller: heightTextControllerUnit2,
-                                  color:
-                                      (height > 0) ? Colors.grey : Colors.red,
-                                  text: (heightCoversion == 12) ? "in" : "cm",
-                                  onChange: (value) async {
-                                    setState(() => toSave = true);
-                                    if (heightTextControllerUnit1
-                                        .text.isEmpty) {
-                                      setState(() {
-                                        (value.length == 0)
-                                            ? height = 0
-                                            : height = int.parse(value);
-                                      });
-                                      setBMI();
-                                    } else {
-                                      setState(() {
-                                        (value.length == 0)
-                                            ? height = int.parse(
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  // Change height fields
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Row(
+                    // Larger unit (m or ft)
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text("Height: "),
+                      Container(
+                        child: Row(children: [
+                          MetricField(
+                            controller: heightTextControllerUnit1,
+                            color: (height > 0) ? Colors.grey : Colors.red,
+                            text: (heightCoversion == 12) ? "ft" : "m",
+                            onChange: (value) async {
+                              setState(() => toSave = true);
+                              if (heightTextControllerUnit2.text.isEmpty) {
+                                setState(() {
+                                  (value.length == 0)
+                                      ? height = 0
+                                      : height = int.parse(value);
+                                });
+                                setBMI();
+                              } else {
+                                setState(() {
+                                  (value.length == 0)
+                                      ? height = int.parse(
+                                          heightTextControllerUnit2.text)
+                                      : height = int.parse(value) *
+                                              heightCoversion +
+                                          int.parse(
+                                              heightTextControllerUnit2.text);
+                                });
+                                setBMI();
+                              }
+                            },
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 5),
+                            child: Text(
+                              (heightCoversion == 12) ? ("ft") : ("m"),
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ),
+                        ]),
+                      ),
+                      Container(
+                        child: Row(
+                          children: [
+                            // Smaller unit (cm or in)
+                            MetricField(
+                              controller: heightTextControllerUnit2,
+                              color: (height > 0) ? Colors.grey : Colors.red,
+                              text: (heightCoversion == 12) ? "in" : "cm",
+                              onChange: (value) async {
+                                setState(() => toSave = true);
+                                if (heightTextControllerUnit1.text.isEmpty) {
+                                  setState(() {
+                                    (value.length == 0)
+                                        ? height = 0
+                                        : height = int.parse(value);
+                                  });
+                                  setBMI();
+                                } else {
+                                  setState(() {
+                                    (value.length == 0)
+                                        ? height = int.parse(
+                                                heightTextControllerUnit1
+                                                    .text) *
+                                            heightCoversion
+                                        : height = int.parse(
                                                     heightTextControllerUnit1
                                                         .text) *
-                                                heightCoversion
-                                            : height = int.parse(
-                                                        heightTextControllerUnit1
-                                                            .text) *
-                                                    heightCoversion +
-                                                int.parse(value);
-                                      });
-                                      setBMI();
-                                    }
-                                  },
-                                ),
-
-                                Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 5),
-                                  child: Text(
-                                    (heightCoversion == 12) ? ("in") : ("cm"),
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                ),
-                              ],
+                                                heightCoversion +
+                                            int.parse(value);
+                                  });
+                                  setBMI();
+                                }
+                              },
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 7),
-                            child: Container(
-                                width: 70,
-                                child: ConversionButton(
-                                  buttonTitle:
-                                      (heightCoversion == 12) ? "m" : "ft",
-                                  onPressed: () {
-                                    setState(() => (heightCoversion == 12)
-                                        ? heightCoversion = 100
-                                        : heightCoversion = 12);
-                                    changeToOtherUnit(false);
-                                  },
-                                )),
-                          ),
-                        ],
+
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 5),
+                              child: Text(
+                                (heightCoversion == 12) ? ("in") : ("cm"),
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ]),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 7),
+                        child: Container(
+                            width: 70,
+                            child: ConversionButton(
+                              buttonTitle: (heightCoversion == 12) ? "m" : "ft",
+                              onPressed: () {
+                                setState(() => (heightCoversion == 12)
+                                    ? heightCoversion = 100
+                                    : heightCoversion = 12);
+                                changeToOtherUnit(false);
+                              },
+                            )),
+                      ),
+                    ],
                   ),
-                ),
+                ]),
               ),
             ),
           ),
