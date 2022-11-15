@@ -22,11 +22,15 @@ class _MePageState extends State<MePage> {
   int weight = 180;
   int height = 71;
   double BMI = 0;
+  // Controller that corresponds to a Textfield for a user to enter their weight
   final weightTextController = TextEditingController();
+  // Controller that corresponds to a Textfield for a user to enter their height (in feet/ meters)
   final heightTextControllerUnit1 = TextEditingController();
+  // Controller that corresponds to a Textfield for a user to enter their height (for the remaining cm/in)
   final heightTextControllerUnit2 = TextEditingController();
   int heightCoversion = 12;
   bool isLbs = true;
+  // On a textfield edit, the user will be prompted to save their changes
   bool toSave = false;
   final goalList = ["Gain Weight", "Maintain Weight", "Lose Weight"];
 
@@ -59,6 +63,7 @@ class _MePageState extends State<MePage> {
   }
 
   void setBMI() {
+    // Calculates the BMI given the currently inputed weight and height
     int BMIweight;
     int BMIheight;
     (isLbs) ? (BMIweight = (weight / 2.20462).round()) : (BMIweight = weight);
@@ -69,6 +74,7 @@ class _MePageState extends State<MePage> {
   }
 
   void editHeightVal(String changedHeight) {
+    // Changes height on a textfield change in the "Body Measurements" section
     setState(() {
       (changedHeight.length == 0)
           ? height = 0
@@ -121,12 +127,15 @@ class _MePageState extends State<MePage> {
         backgroundColor: Colors.red,
         title: Text("About Me"),
       ),
+      // Page is set to scrollable in case we want to add more sections that
+      // overfill the page
       body: SingleChildScrollView(
         child: Column(children: [
           SizedBox(
             height: 20,
           ),
           const Padding(
+            // Will be username section
             padding: EdgeInsets.symmetric(vertical: 15),
             child: Text(
               "Q. Garcia",
@@ -134,6 +143,7 @@ class _MePageState extends State<MePage> {
                   fontSize: 40, fontWeight: FontWeight.bold, color: Colors.red),
             ),
           ),
+          // Profile photos may not be implemented, this is just a placeholder
           const Icon(
             Icons.account_circle,
             color: Colors.grey,
@@ -142,6 +152,8 @@ class _MePageState extends State<MePage> {
           SizedBox(
             height: 25,
           ),
+
+          // Goals menu
           CollapsableSection(
             sectionChild: ExpandableNotifier(
               child: ExpandablePanel(
@@ -196,6 +208,8 @@ class _MePageState extends State<MePage> {
               ),
             ),
           ),
+
+          // Body measurements menu
           CollapsableSection(
             sectionChild: ExpandableNotifier(
               child: ExpandablePanel(
@@ -368,9 +382,11 @@ class _MePageState extends State<MePage> {
           SizedBox(
             height: 20,
           ),
+          // BMI display
           if (weight > 0 && height > 0)
             MeasurementIndexBox(
                 indexName: "BMI", indexValue: (BMI).toStringAsFixed(2)),
+          // Save button for when backend integration is implemented
           if (toSave)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 25),
