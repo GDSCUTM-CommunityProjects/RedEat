@@ -34,7 +34,7 @@ class _SignupPageState extends State<SignupPage> {
   Future<int> signupUser(String username, String password, String email,
       String first_name, String last_name) async {
     final response = await http.post(
-      Uri.parse("${BackendURL.BACKEND_URL}/api/account"),
+      Uri.parse("${BackendURL.BACKEND_URL}api/account"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

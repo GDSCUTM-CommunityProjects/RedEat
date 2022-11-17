@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:src/Pages/login.dart';
+import 'package:src/Pages/signup.dart';
 
 import 'Pages/MePage.dart';
 void main() {
@@ -16,7 +17,8 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => MyHomePage(title: 'Flutter Demo Home Page'),  // Initial route is MyHomePage
-        '/login': (context) => MePage(),                             // Route for login page
+        '/login': (context) => MePage(),
+        '/register':(context) => SignupPage(),                             // Route for login page
       },
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -115,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 textStyle: const TextStyle(fontSize: 20),
               ),
               onPressed: () {
-                Navigator.pushNamed(context, '/login');
+                Navigator.pushNamed(context, '/register');
               },
               child: const Text('Login'),
             )
