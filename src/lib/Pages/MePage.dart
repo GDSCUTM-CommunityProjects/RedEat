@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:expandable/expandable.dart';
+import 'package:src/Visual%20Components/Buttons/BaseButtonTemplate.dart';
 import 'package:src/Visual%20Components/Buttons/GoalButton.dart';
 import 'package:src/Visual%20Components/FormComponents/CollapsableSection.dart';
 import 'package:src/Visual%20Components/FormComponents/CollapsableText.dart';
@@ -391,24 +392,11 @@ class _MePageState extends State<MePage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 35),
               child: Container(
-                child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.redAccent,
-                        minimumSize: const Size.fromHeight(50),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        )),
-                    onPressed: () {
-                      setState(() => (heightCoversion == 12)
-                          ? heightCoversion = 100
-                          : heightCoversion = 12);
-                      changeToOtherUnit(false);
-                    },
-                    child: Text(
-                      "Save",
-                      style: TextStyle(fontSize: 24),
-                    )),
-              ),
+                  child: BaseButtonTemplate(
+                      buttonTitle: "Save",
+                      onPressed: () {},
+                      color: Colors.red,
+                      fontSize: 20)),
             ),
         ]),
       ),
