@@ -34,7 +34,7 @@ class _SignupPageState extends State<SignupPage> {
   Future<int> signupUser(String username, String password, String email,
       String first_name, String last_name) async {
     final response = await http.post(
-      Uri.parse("${BackendURL.BACKEND_URL}api/account"),
+      Uri.parse("${BackendURL.BACKEND_URL}api/account/"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -50,10 +50,10 @@ class _SignupPageState extends State<SignupPage> {
     // Created user successfully
     if (response.statusCode == 200) {
       return 0;
-    // User alredy exists 
+      // User alredy exists
     } else if (response.statusCode == 403) {
       return 1;
-    // Malformed data or Bad request
+      // Malformed data or Bad request
     } else {
       return 2;
     }
@@ -63,9 +63,6 @@ class _SignupPageState extends State<SignupPage> {
     return FutureBuilder<int>(
       future: _signupUser,
       builder: ((context, snapshot) {
-        if (snapshot.hasData) {
-          return Text("Account created successfully");
-        }
         return const CircularProgressIndicator();
       }),
     );
@@ -95,8 +92,14 @@ class _SignupPageState extends State<SignupPage> {
                     builder: (BuildContext context) => LoginPage()));
           } else if (value == 1) {
             setState(() => validUsername = false);
+            setState(() {
+              _signupUser = null;
+            });
           } else {
             setState(() => badData = true);
+            setState(() {
+              _signupUser = null;
+            });
           }
         });
       }
