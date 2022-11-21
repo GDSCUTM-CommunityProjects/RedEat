@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:src/Pages/login.dart';
+import 'package:src/Pages/signup.dart';
+import 'package:src/Pages/InitialSetupPage.dart';
+import 'package:src/Pages/SettingsPage.dart';
+import 'package:src/Navbar.dart';
+import 'package:src/Pages/BarcodeScanner.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -13,8 +19,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/',
       routes: {
-        '/': (context) => MyHomePage(title: 'Flutter Demo Home Page'),  // Initial route is MyHomePage
-        '/login': (context) => LoginPage(),                             // Route for login page
+        '/': (context) => const MyHomePage(title: 'Flutter Demo Home Page'),  // Initial route is MyHomePage
+        '/login': (context) => const LoginPage(),                             // Route for login page
+        '/signup': (context) => const SignupPage(),
+        '/intialSetup': (context) => const InitialSetupPage(),
+        '/settings': (context) => const SettingsPage(),
+        '/navbar': (context) => const Navbar(),
+        '/barcodeScanner': (context) => BarCodeScanner(),
       },
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -116,7 +127,43 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, '/login');
               },
               child: const Text('Login'),
-            )
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: const TextStyle(fontSize: 20),
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/signup');
+              },
+              child: const Text('Sign Up'),
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: const TextStyle(fontSize: 20),
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/intialSetup');
+              },
+              child: const Text('Initial Setup'),
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: const TextStyle(fontSize: 20),
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/settings');
+              },
+              child: const Text('Settings'),
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: const TextStyle(fontSize: 20),
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/navbar');
+              },
+              child: const Text('NavBar'),
+            ),
           ],
         ),
       ),
