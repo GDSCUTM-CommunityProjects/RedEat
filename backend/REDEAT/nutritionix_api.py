@@ -27,22 +27,21 @@ def get_product_suggestions_from_name(name: str) -> dict:
 
     product_info = requests.post(url=NUTRITIONIX_URL, headers=header, json=data)
 
-    print(product_info.json()["hits"])
+    return product_info.json()["hits"]
 
 
-def get_product_info_from_item_exact_name(item_name: str, brand_name:str) -> dict:
+def get_product_info_from_item_exact_name(item_name: str) -> dict:
     """
     returns all the product info from Nutritionix database given the item_id
     associated with the product
     :param item_name: Exact item name from Nutritionix Database
-    :param brand_name: Exact brand name from Nutritionix Database
     :return: Dict containing product information
     """
     header = {"Content-Type": "application/json"}
     data = {"appId": APP_ID,
             "appKey": APP_KEY,
             "limit": 1,
-            "queries": {"item_name": item_name, "brand_name": brand_name},
+            "queries": {"item_name": item_name},
             "filters": {"item_type": 2},
             "fields": ["brand_name",
                        "item_name",
@@ -82,7 +81,7 @@ def get_product_info_from_item_exact_name(item_name: str, brand_name:str) -> dic
 
     product_info = requests.post(url=NUTRITIONIX_URL, headers=header, json=data)
 
-    print(product_info.json())
+    return product_info.json()['hits'][0]
 
 
 def get_product_name_from_upc(upc: str) -> str:
