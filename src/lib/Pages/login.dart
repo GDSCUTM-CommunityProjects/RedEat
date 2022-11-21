@@ -1,5 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
+import 'package:src/Pages/MePage.dart';
+
+import '../BackendConnection/BackendURL.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -9,18 +15,18 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
-  bool usernameCorrect = true;
-  bool passwordCorrect = true;
+  bool hide_error = true;
+  String error_message = "";
+  Future<String>? _loggedUser;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    usernameCorrect = true;
-    passwordCorrect = true;
+    hide_error = true;
+    error_message = "";
   }
 
   @override
@@ -31,49 +37,94 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
+  void handleLogin() {
+    if (usernameController.text.length > 0 &&
+        passwordController.text.length > 0) {
+      setState(() {
+        _loggedUser =
+            loginUser(usernameController.text, passwordController.text);
+      });
+      if (_loggedUser != null) {
+        _loggedUser?.then((value) {
+          if (value == "") {
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (BuildContext context) => MePage()));
+          } else {
+            setState(() {
+              error_message = value;
+            });
+            hide_error = false;
+          }
+        });
+      }
+    }
+  }
+
+  Future<String> loginUser(String username, String password) async {
+    final response = await http.post(
+      Uri.parse("${BackendURL.BACKEND_URL}api/token/"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'username': username,
+        'password': password,
+      }),
+    );
+
+    // Created user successfully
+    if (response.statusCode == 200) {
+      return "";
+      // User alredy exists
+    } else {
+      return json.decode(utf8.decode(response.bodyBytes)).toString();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        backgroundColor: Colors.red,
-        title: Text('Login'),
-        centerTitle: true,
-      ),
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Red',
-                    style: TextStyle(
-                      fontSize: 48,
-                      color: Colors.red,
-                    ),
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          backgroundColor: Colors.red,
+          title: Text('Login'),
+          centerTitle: true,
+        ),
+        body: SafeArea(
+            child: Center(
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Red',
+                  style: TextStyle(
+                    fontSize: 48,
+                    color: Colors.red,
                   ),
-                  Text(
-                    'Eat',
-                    style: TextStyle(
-                      fontSize: 48,
-                    ),
+                ),
+                Text(
+                  'Eat',
+                  style: TextStyle(
+                    fontSize: 48,
                   ),
-                ],
-              ),
-              SizedBox(height: 30,),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 30,
+            ),
 
-              // Username input field
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: (usernameCorrect) ? Colors.grey : Colors.red),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Padding(
+            // Username input field
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                      color: (hide_error) ? Colors.grey : Colors.red),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: TextField(
                       controller: usernameController,
@@ -81,116 +132,95 @@ class _LoginPageState extends State<LoginPage> {
                         border: InputBorder.none,
                         hintText: 'Username',
                       ),
-                    )
-                  ),
-                ),
+                    )),
               ),
-              SizedBox(height: 10,),
+            ),
+            SizedBox(
+              height: 10,
+            ),
 
-              // Password input field
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: (passwordCorrect) ? Colors.grey : Colors.red),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: TextField(
-                        controller: passwordController,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Password',
-                        ),
-                        obscureText: true,
-                      )
-                  ),
+            // Password input field
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                      color: (hide_error) ? Colors.grey : Colors.red),
+                  borderRadius: BorderRadius.circular(12),
                 ),
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: TextField(
+                      controller: passwordController,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Password',
+                      ),
+                      obscureText: true,
+                    )),
               ),
-              (usernameCorrect && passwordCorrect) ? SizedBox(height: 0) : SizedBox(height: 5),
+            ),
+            (hide_error) ? SizedBox(height: 0) : SizedBox(height: 5),
 
-              // Error messages
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (!usernameCorrect)   // Show incorrect Username message if username is incorrect
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.error,
+            // Error messages
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (!hide_error) // Show incorrect Username message if username is incorrect
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.error,
+                            color: Colors.red,
+                            size: 14.0,
+                          ),
+                          Text(
+                            error_message,
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
                               color: Colors.red,
-                              size: 14.0,
                             ),
-                            Text(
-                              ' Incorrect Username',
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                color: Colors.red,
-                              ),
-                            ),
-                          ],
-                        ),
-                      if (!passwordCorrect)   // Show incorrect Password message if password is incorrect
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.error,
-                              color: Colors.red,
-                              size: 14.0,
-                            ),
-                            Text(
-                              ' Incorrect Password',
-                              style: TextStyle(
-                                color: Colors.red,
-                              ),
-                            ),
-                          ],
-                        ),
-                    ],
-                  ),
+                          ),
+                        ],
+                      ),
+                  ],
                 ),
               ),
-              SizedBox(height: 20,),
+            ),
+            SizedBox(
+              height: 20,
+            ),
 
-              // Login Button
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                child: ElevatedButton(
+            // Login Button
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.redAccent,
-                    minimumSize: const Size.fromHeight(50),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    )
-                  ),
+                      backgroundColor: Colors.redAccent,
+                      minimumSize: const Size.fromHeight(50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      )),
                   onPressed: () {
-                    (usernameController.text == 'username') ? setState(() => usernameCorrect = true ) : setState(() => usernameCorrect = false );
-                    (passwordController.text == 'password') ? setState(() => passwordCorrect = true ) : setState(() => passwordCorrect = false );
+                    handleLogin();
                   },
                   child: Text(
                     'Login',
                     style: TextStyle(fontSize: 24),
                   )),
-              ),
-              SizedBox(height: 20,),
+            ),
+            SizedBox(
+              height: 20,
+            ),
 
-              // Register Now
-              Text(
-                "Don't have an account yet? Register Now!",
-                style: TextStyle(
-                  color: Colors.grey
-                )
-              ),
-
-            ]
-          ),
-        )
-      )
-    );
+            // Register Now
+            Text("Don't have an account yet? Register Now!",
+                style: TextStyle(color: Colors.grey)),
+          ]),
+        )));
   }
 }
