@@ -63,7 +63,10 @@ class _SignupPageState extends State<SignupPage> {
     return FutureBuilder<int>(
       future: _signupUser,
       builder: ((context, snapshot) {
-        return const CircularProgressIndicator();
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center, children: [
+          CircularProgressIndicator()
+        ],);
       }),
     );
   }

@@ -77,7 +77,8 @@ class _LoginPageState extends State<LoginPage> {
       return "";
       // User alredy exists
     } else {
-      return json.decode(utf8.decode(response.bodyBytes)).toString();
+      Map<String, dynamic> error = jsonDecode(response.body);
+      return error['detail'];
     }
   }
 
