@@ -29,15 +29,19 @@ class _SignupPageState extends State<SignupPage> {
   bool validFirstName = true;
   bool validLastName = true;
   bool badData = false;
-  Future<int>? _signupUser;
+  Future<int>? _signupUser; // Used to keep track of whether a request is 
+                            // awaiting a response or if it has received a response 
 
+  // Call backend request to create a user
   Future<int> signupUser(String username, String password, String email,
       String first_name, String last_name) async {
+    // Send a POST request
     final response = await http.post(
       Uri.parse("${BackendURL.BACKEND_URL}api/account/"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
+      // Format the body based upon the required input
       body: jsonEncode(<String, String>{
         'username': username,
         'password': password,
@@ -47,6 +51,7 @@ class _SignupPageState extends State<SignupPage> {
       }),
     );
 
+    // Check response status and return appropriate code
     // Created user successfully
     if (response.statusCode == 200) {
       return 0;
@@ -59,6 +64,7 @@ class _SignupPageState extends State<SignupPage> {
     }
   }
 
+  // Builds a new portion of the page for a progress bar
   FutureBuilder<int> buildFutureBuilder() {
     return FutureBuilder<int>(
       future: _signupUser,
@@ -79,6 +85,9 @@ class _SignupPageState extends State<SignupPage> {
         validPassword &&
         validConfirmPassword) {
       setState(() {
+        // Set _signupUser to the return value of our backend request.
+        // During this time, _signupUser will be set to a non-null future object
+        // As such, the progress bar will show during this time
         _signupUser = signupUser(
             usernameController.text,
             passwordController.text,
@@ -86,21 +95,30 @@ class _SignupPageState extends State<SignupPage> {
             firstNameController.text,
             lastNameController.text);
       });
+      // After signupUser function returns, check the return value with .then
       if (_signupUser != null) {
         _signupUser?.then((value) {
+          // Successful registration, redirect to login
           if (value == 0) {
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                     builder: (BuildContext context) => LoginPage()));
+          // Unsuccessful login, invalid username
           } else if (value == 1) {
+            // notify the user of an invalid username
             setState(() => validUsername = false);
             setState(() {
+              // set _signupUser to null. As such, the progress bar will disappear
+              // and the registration page will be shown again
               _signupUser = null;
             });
           } else {
+            // notify the user that a data error occured
             setState(() => badData = true);
             setState(() {
+              // set _signupUser to null. As such, the progress bar will disappear
+              // and the registration page will be shown again
               _signupUser = null;
             });
           }
@@ -119,6 +137,8 @@ class _SignupPageState extends State<SignupPage> {
           centerTitle: true,
         ),
         body: SafeArea(
+            // if a response is being waited on from the backend, show a progress bar
+            // otherwise show the registration page
             child: (_signupUser == null)
                 ? Center(
                     child: Column(

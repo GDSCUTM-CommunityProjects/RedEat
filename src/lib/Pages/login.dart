@@ -17,9 +17,11 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
-  bool hide_error = true;
-  String error_message = "";
-  Future<String>? _loggedUser;
+  bool hide_error = true; // Boolean to record whether an error has occured
+  String error_message = ""; // If hide_error is false show this error message to
+                             // the user
+  Future<String>? _loggedUser; // Used to keep track of whether a request is 
+                               // awaiting a response or if it has received a response 
 
   @override
   void initState() {
@@ -37,22 +39,34 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
+  // Function used to either display an error message if there was a problem
+  // logging in or redirect to ME page if login is successful
   void handleLogin() {
+    // Check whether there is input in both the username or password field
     if (usernameController.text.length > 0 &&
         passwordController.text.length > 0) {
       setState(() {
+        // The attribute will no longer be NULL. While the response is being awaited
+        // and processes, _loggedUser will be some async data but won't be null.
+        // as such, the page will switch to a loading bar
         _loggedUser =
             loginUser(usernameController.text, passwordController.text);
       });
       if (_loggedUser != null) {
+        // Once a response is received and loginUser returns an error message, use
+        // .then to work with the returned value
         _loggedUser?.then((value) {
+          // If there is no error message returned we have a successful login.
+          // Navigate to the ME page
           if (value == "") {
             Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (BuildContext context) => MePage()));
           } else {
+            // Otherwise record the error message
             setState(() {
               error_message = value;
             });
+            // Show the error message to the user
             hide_error = false;
           }
         });
@@ -61,23 +75,29 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<String> loginUser(String username, String password) async {
+    // Send a POST request to the backend
     final response = await http.post(
       Uri.parse("${BackendURL.BACKEND_URL}api/token/"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
+      // Send the correct JSON body for the request
       body: jsonEncode(<String, String>{
         'username': username,
         'password': password,
       }),
     );
 
+    // Get response and check the status code (See README.md for background
+    // on the status codes)
     // Created user successfully
     if (response.statusCode == 200) {
       return "";
       // User alredy exists
     } else {
+      // Decode the response to JSON
       Map<String, dynamic> error = jsonDecode(response.body);
+      // Access the error message in th JSON object
       return error['detail'];
     }
   }
@@ -207,6 +227,7 @@ class _LoginPageState extends State<LoginPage> {
                         borderRadius: BorderRadius.circular(12),
                       )),
                   onPressed: () {
+                    // Send request to the backend
                     handleLogin();
                   },
                   child: Text(
