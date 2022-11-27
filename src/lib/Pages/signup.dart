@@ -1,3 +1,4 @@
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:http/http.dart' as http;
 
 import '../BackendConnection/User.dart';
 
+
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
 
@@ -15,6 +17,7 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
+
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
   final usernameController = TextEditingController();
@@ -299,6 +302,7 @@ class _SignupPageState extends State<SignupPage> {
 
   Widget inputFieldTemplate(
       String fieldName, TextEditingController controller, bool valid) {
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30.0),
       child: Container(
@@ -317,6 +321,7 @@ class _SignupPageState extends State<SignupPage> {
                 hintText: fieldName,
               ),
             )),
+
       ),
     );
   }

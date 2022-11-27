@@ -38,6 +38,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   expandable: ^5.0.1
   http: ^0.13.5
+  curved_navigation_bar: ^1.0.3
+  flutter_barcode_scanner: ^2.0.0
+
 
 dev_dependencies:
   flutter_test:
