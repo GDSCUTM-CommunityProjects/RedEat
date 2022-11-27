@@ -18,10 +18,11 @@ class _LoginPageState extends State<LoginPage> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
   bool hide_error = true; // Boolean to record whether an error has occured
-  String error_message = ""; // If hide_error is false show this error message to
-                             // the user
-  Future<String>? _loggedUser; // Used to keep track of whether a request is 
-                               // awaiting a response or if it has received a response 
+  String error_message =
+      ""; // If hide_error is false show this error message to
+  // the user
+  Future<String>? _loggedUser; // Used to keep track of whether a request is
+  // awaiting a response or if it has received a response
 
   @override
   void initState() {
@@ -240,8 +241,22 @@ class _LoginPageState extends State<LoginPage> {
             ),
 
             // Register Now
-            Text("Don't have an account yet? Register Now!",
-                style: TextStyle(color: Colors.grey)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Don't have an account yet?",
+                    style: TextStyle(color: Colors.grey)),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/signup');
+                  },
+                  child: const Text('Register Now!',
+                      style: TextStyle(
+                        color: Colors.red,
+                      )),
+                ),
+              ],
+            ),
           ]),
         )));
   }
