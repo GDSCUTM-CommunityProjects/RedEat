@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:src/Pages/login.dart';
 import 'package:src/Pages/signup.dart';
+import 'Pages/MePage.dart';
 import 'package:src/Pages/InitialSetupPage.dart';
 import 'package:src/Pages/SettingsPage.dart';
 import 'package:src/Navbar.dart';
@@ -124,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 textStyle: const TextStyle(fontSize: 20),
               ),
               onPressed: () {
-                Navigator.pushNamed(context, '/login');
+                Navigator.pushNamed(context, '/register');
               },
               child: const Text('Login'),
             ),
