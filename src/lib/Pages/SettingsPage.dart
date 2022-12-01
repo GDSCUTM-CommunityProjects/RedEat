@@ -196,7 +196,8 @@ class _SettingsPageState extends State<SettingsPage> {
                       child: Text(
                         'Confirm Changes',
                         style: TextStyle(fontSize: 24),
-                      )),
+                      )
+                  ),
                 ),
                 // SizedBox(height: 90,),
               ],

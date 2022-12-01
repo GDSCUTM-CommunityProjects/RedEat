@@ -159,9 +159,9 @@ class _SearchDefaultPageState extends State<SearchDefaultPage> {
               // searchOptionButton(context, Icons.qr_code_scanner, "Scan Barcode", "/barcodeScanner", null),
               searchOptionButton(context, Icons.qr_code_scanner, "Scan Barcode", ""),
               SizedBox(height: 20,),
-              searchOptionButton(context, Icons.search, "Search by name", "/login"),
+              searchOptionButton(context, Icons.search, "Search by name", "/searchByName"),
               SizedBox(height: 20,),
-              searchOptionButton(context, Icons.photo_library, "Choose from library", "/login"),
+              searchOptionButton(context, Icons.photo_library, "Choose from library", "/barcodeFailed"),
 
               SizedBox(height: 30),
               Text(
