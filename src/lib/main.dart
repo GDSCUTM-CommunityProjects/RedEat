@@ -125,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 textStyle: const TextStyle(fontSize: 20),
               ),
               onPressed: () {
-                Navigator.pushNamed(context, '/register');
+                Navigator.pushNamed(context, '/login');
               },
               child: const Text('Login'),
             ),
