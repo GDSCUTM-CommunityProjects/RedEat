@@ -24,11 +24,9 @@ def get_product_info(upc: str, name: str):
         if (name is None) or (name == ""):
             return {}
         else:
-
             data = nutritionix_api.get_product_info_from_item_exact_name(name)
             database.insert_product_info(upc, name, data)
             return data
-
     elif has_name and not has_upc:
         # query nutritionix
         return nutritionix_api.get_product_info_from_item_exact_name(name)
