@@ -90,12 +90,15 @@ def get_product_name_from_upc(upc: str) -> str:
     given UPC.
 
     :param upc: 12 digit UPC code including leading zeros
-    :return: product name associated with UPC. empty string if product not found
+    :return: Product name associated with UPC. Empty string if product not found
     """
     full_page = requests.get(url=UPC_DATABASE_URL + upc).text
-    start_index = full_page.find("Description</td><td></td><td>")
-    offset = len("Description</td><td></td><td>")
-    end_index = full_page[start_index + offset:].find("</td>")
+    if "Item Not Found" in full_page:
+        return ""
+    else:
+        start_index = full_page.find("Description</td><td></td><td>")
+        offset = len("Description</td><td></td><td>")
+        end_index = full_page[start_index + offset:].find("</td>")
 
-    return full_page[start_index + offset:start_index + len(
-        "Description</td><td></td><td>") + end_index]
+        return full_page[start_index + offset:start_index + len(
+            "Description</td><td></td><td>") + end_index]
