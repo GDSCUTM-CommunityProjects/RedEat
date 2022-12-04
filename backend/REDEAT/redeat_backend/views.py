@@ -75,7 +75,7 @@ def search_product(request):
     :param request:
     :return:
     """
-    if request.method == "GET":
+    if request.method == "POST":
         json_data = json.loads(request.body)
         try:
             # trying to unpack required params
