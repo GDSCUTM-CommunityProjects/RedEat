@@ -14,6 +14,9 @@ class Nutritionix(Database):
         super().__init__(connection_string, 'nutri_info')
 
     def insert_product_info(self, upc, name, info, hits=0):
+        """
+        Insert the given UPC, name and product info in the database to be used later. And return the data inserted
+        """
         query = {"id": "unique"}
         current_counter = self.counter_collection.find_one(query)
         count = current_counter['count']
@@ -28,6 +31,8 @@ class Nutritionix(Database):
             "id": count
         }
         self.collection.insert_one(data)
+        data.pop("_id", None)
+        return data
 
     def get_data(self, upc):
         """
