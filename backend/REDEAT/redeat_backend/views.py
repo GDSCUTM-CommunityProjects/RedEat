@@ -68,6 +68,7 @@ def verify(request):
     except TokenBackendError:
         return HttpResponse(status=401)
 
+
 def search_product(request):
     """
     called with two parameters upc and product_name to obtain product information.
@@ -90,8 +91,6 @@ def search_product(request):
 
         product_information = get_data(upc, product_name)
         return JsonResponse(product_information)
-
-        pass
     else:
         # Other methods are not supported, return 400 Bad Request
         return HttpResponse(status=400)
