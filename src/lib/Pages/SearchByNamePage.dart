@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import '../BackendConnection/BackendURL.dart';
+import '../BackendConnection/Product.dart';
 import '../BackendConnection/SampleProductJson.dart';
 import 'package:http/http.dart' as http;
 
@@ -16,10 +17,9 @@ class SearchByNamePage extends StatefulWidget {
 
 class _SearchByNamePageState extends State<SearchByNamePage> {
 
-  String productName = "";
   TextEditingController productNameController = TextEditingController();
   Future<String>? _searchResponse;
-  bool successfulSearch = false;
+  bool successfulSearch = true;
 
   @override
   void initState() {
@@ -35,9 +35,15 @@ class _SearchByNamePageState extends State<SearchByNamePage> {
     super.dispose();
   }
 
+  // Make http get request
   Future<String> getProductInfo(String name) async {
+    var queryParams = {
+      'upc': "",
+      'product_name': name
+    };
+
     final response = await http.post(
-      Uri.parse("${BackendURL.BACKEND_URL}api/search_product/"),
+      Uri.parse("${BackendURL.BACKEND_URL}api/search_product"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -46,12 +52,9 @@ class _SearchByNamePageState extends State<SearchByNamePage> {
         'product_name': name
       }),
     );
-    return response.body;
+
     if (response.statusCode == 200) {
 
-      setState(() {
-
-      });
       return response.body;
     } else {
       // If the server did not return a 201 CREATED response,
@@ -60,17 +63,22 @@ class _SearchByNamePageState extends State<SearchByNamePage> {
     }
   }
 
+  // Call getProductInfo and redirect to ProductInfo page if item exists, otherwise show error message
   Future<void> searchProduct(String name) async {
     _searchResponse = getProductInfo(name);
     if (_searchResponse != null) {
       _searchResponse?.then((String response) {
         if (response == "{}") {
-          // show error message
+          setState(() {
+            successfulSearch = false;
+          });
         }
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => ProductInfo(product1))
-          // MaterialPageRoute(builder: (context) => ProductInfo("060410001318"))
-        );
+        else {
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => ProductInfo(Product.toMap(response)))
+            // MaterialPageRoute(builder: (context) => ProductInfo("060410001318"))
+          );
+        }
       });
     }
   }
@@ -92,7 +100,7 @@ class _SearchByNamePageState extends State<SearchByNamePage> {
   Widget errorMessage(String message) {
     return Row(
       children: [
-        Icon(
+        const Icon(
           Icons.error,
           color: Colors.red,
           size: 14.0,
@@ -100,7 +108,7 @@ class _SearchByNamePageState extends State<SearchByNamePage> {
         Text(
           ' ' + message,
           textAlign: TextAlign.start,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.red,
           ),
         ),
@@ -127,7 +135,7 @@ class _SearchByNamePageState extends State<SearchByNamePage> {
                 TextField(
                   controller: productNameController,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(
+                    prefixIcon: const Icon(
                       Icons.search,
                       size: 18,
                       // color: Colors.grey[500],
@@ -154,11 +162,11 @@ class _SearchByNamePageState extends State<SearchByNamePage> {
 
                 // show error message if search failed
                 if (!successfulSearch)...[
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   errorMessage("Unable to find this product")
                 ],
 
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red,
@@ -169,16 +177,14 @@ class _SearchByNamePageState extends State<SearchByNamePage> {
                   ),
                   onPressed: () {
                     setState(() {
-                      productName = productNameController.text;
+                      searchProduct(productNameController.text);
                     });
                   },
-                  child: Text(
+                  child: const Text(
                     'Search',
                     style: TextStyle(fontSize: 24),
                   )
                 ),
-
-
 
               ],
             ),

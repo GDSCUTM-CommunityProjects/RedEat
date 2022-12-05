@@ -15,7 +15,7 @@ class BarcodeFailedPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   "Unable to find the product with the scanned barcode, please try searching with the product name",
                   style: TextStyle(
                     fontSize: 24,
@@ -23,10 +23,10 @@ class BarcodeFailedPage extends StatelessWidget {
                   ),
                 ),
 
-                SizedBox(height:20),
+                SizedBox(height:40),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xff343a40),
+                        backgroundColor: Colors.red,
                         minimumSize: const Size.fromHeight(50),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -38,11 +38,11 @@ class BarcodeFailedPage extends StatelessWidget {
                         // MaterialPageRoute(builder: (context) => ProductInfo("060410001318"))
                       );
                     },
-                    child: Text(
+                    child: const Text(
                       'Search by Product Name',
                       style: TextStyle(
                         fontSize: 24,
-                        color: Colors.red
+                        color: Colors.white
                       ),
                     )
                 ),

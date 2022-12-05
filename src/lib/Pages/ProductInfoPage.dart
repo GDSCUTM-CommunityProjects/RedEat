@@ -31,6 +31,8 @@ class _ProductInfoState extends State<ProductInfo> {
   void initState() {
     // TODO: implement initState
     product = Product.fromJson(widget.responseJson);
+    // print(widget.responseJson);
+    print(product.itemName);
     super.initState();
 
   }
@@ -80,7 +82,9 @@ class _ProductInfoState extends State<ProductInfo> {
                       border: Border.all(color: Colors.red)
                     ),
                     child: ExpansionTile(
-                      title: Text(
+                      collapsedIconColor: Colors.white,
+                      iconColor: Colors.white,
+                      title: const Text(
                         "Ingredients",
                         style: TextStyle(
                           color: Colors.white
@@ -89,7 +93,7 @@ class _ProductInfoState extends State<ProductInfo> {
                       children: [
                         Container(
                           width: double.infinity,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(0),
                                 topRight: Radius.circular(0),
@@ -101,7 +105,7 @@ class _ProductInfoState extends State<ProductInfo> {
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: Text(
-                              product.fields['nf_ingredient_statement']
+                                (product.fields['nf_ingredient_statement']) ?? ""
                             ),
                           ),
                         )
@@ -109,6 +113,9 @@ class _ProductInfoState extends State<ProductInfo> {
                     ),
                   ),
                 ),
+
+                // SizedBox(height:30),
+                // Text(),
                 
                 SizedBox(height: 30,),
                 Padding(
@@ -145,6 +152,29 @@ class _ProductInfoState extends State<ProductInfo> {
                           //   ]),
                           // ]
                           rows: generateRows(),
+                        ),
+                      ),
+
+                      const SizedBox(height:30),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 30.0),
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.red,
+                                minimumSize: const Size.fromHeight(50),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                )
+                            ),
+                            onPressed: () {
+                              // setState(() {
+                              //
+                              // });
+                            },
+                            child: const Text(
+                              "Add to today's diary",
+                              style: TextStyle(fontSize: 24),
+                            )
                         ),
                       ),
                     ],

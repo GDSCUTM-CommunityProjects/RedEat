@@ -3,10 +3,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:http/http.dart';
+import 'package:src/Pages/BarcodeFailedPage.dart';
 import 'package:src/Pages/login.dart';
 import 'package:src/Pages/ProductInfoPage.dart';
 
 import '../BackendConnection/BackendURL.dart';
+import '../BackendConnection/Product.dart';
 import '../BackendConnection/SampleProductJson.dart';
 import 'package:http/http.dart' as http;
 
@@ -23,8 +26,18 @@ class _SearchDefaultPageState extends State<SearchDefaultPage> {
 
 
   Future<String> getProductInfo(String barcode) async {
+    final payload = '{"upc": $barcode, "product_name": ""}';
+    Map<String, dynamic> queryParams = {
+      'upc': barcode,
+      'product_name': ""
+    };
+
+    // var uri = Uri.http(BackendURL.BACKEND_URL, "api/search_product", { 'upc': barcode, 'product_name': ''});
+    // var uri = Uri.parse("http://${BackendURL.BACKEND_URL}/api/search_product?upc=$barcode&product_name=");
+
     final response = await http.post(
-      Uri.parse("${BackendURL.BACKEND_URL}api/search_product/"),
+      // uri,
+      Uri.parse("${BackendURL.BACKEND_URL}api/search_product"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -33,10 +46,8 @@ class _SearchDefaultPageState extends State<SearchDefaultPage> {
         'product_name': ""
       }),
     );
-    return response.body;
-    if (response.statusCode == 200) {
 
-      // return Album.fromJson(jsonDecode(response.body));
+    if (response.statusCode == 200) {
       return response.body;
     } else {
       // If the server did not return a 201 CREATED response,
@@ -63,24 +74,24 @@ class _SearchDefaultPageState extends State<SearchDefaultPage> {
     if (!mounted) return;
 
     setState(() {
-      // barcode = result;
-      barcode = "060410001318";
+      barcode = result;
+      // barcode = "060410001318";
+      // barcode = "6969";
       _barcodeResponse = getProductInfo(barcode);
-      // getProductInfo(barcode).then((String response) => {
-      //   barcode = "abc",
-      //   Navigator.of(context).push(
-      //     MaterialPageRoute(builder: (context) => ProductInfo(response))
-      //   )
-      // });
+
     });
 
     if (_barcodeResponse != null) {
 
       _barcodeResponse?.then((String response) {
-        Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => ProductInfo(product1))
-          // MaterialPageRoute(builder: (context) => ProductInfo("060410001318"))
-        );
+        (response == "{}")
+          ? Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const BarcodeFailedPage())
+            )
+          : Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => ProductInfo(Product.toMap(response)))
+              // MaterialPageRoute(builder: (context) => ProductInfo(product1))
+            );
       });
     }
     else {
@@ -107,6 +118,7 @@ class _SearchDefaultPageState extends State<SearchDefaultPage> {
 
   @override
   Widget build(BuildContext context) {
+    const IconData barcodeIcon = IconData(0xf586, fontFamily: 'iconFont', fontPackage: 'iconFontPackage');
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -118,7 +130,7 @@ class _SearchDefaultPageState extends State<SearchDefaultPage> {
               // Title
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: const [
                   Text(
                     'Search ',
                     style: TextStyle(
@@ -135,11 +147,11 @@ class _SearchDefaultPageState extends State<SearchDefaultPage> {
                   ),
                 ],
               ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
 
               // Subtitle
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30.0),
                 child: Text(
                   "Select one of the following ways to search for an item",
                   textAlign: TextAlign.center,
@@ -157,7 +169,7 @@ class _SearchDefaultPageState extends State<SearchDefaultPage> {
 
               SizedBox(height: 50,),
               // searchOptionButton(context, Icons.qr_code_scanner, "Scan Barcode", "/barcodeScanner", null),
-              searchOptionButton(context, Icons.qr_code_scanner, "Scan Barcode", ""),
+              searchOptionButton(context, const IconData(0xf586, fontFamily: "CupertinoIcons.iconFont", fontPackage: "iconFontPackage"), "Scan Barcode", ""),
               SizedBox(height: 20,),
               searchOptionButton(context, Icons.search, "Search by name", "/searchByName"),
               SizedBox(height: 20,),
@@ -165,8 +177,8 @@ class _SearchDefaultPageState extends State<SearchDefaultPage> {
 
               SizedBox(height: 30),
               Text(
-                "Barcode: " + barcode,
-                style: TextStyle(
+                "Barcode: $barcode",
+                style: const TextStyle(
                     fontSize: 24
                 ),
               )
