@@ -25,10 +25,23 @@ def get_product_info(upc: str, name: str):
             return {}
         else:
             data = nutritionix_api.get_product_info_from_item_exact_name(name)
+            if not data:
+                return {}
             return database.insert_product_info(upc, name, data)
     elif has_name and not has_upc:
         # query nutritionix
-        return nutritionix_api.get_product_info_from_item_exact_name(name)
+        info = nutritionix_api.get_product_info_from_item_exact_name(name)
+        if not info:
+            return {}
+        data = {
+            "upc": upc,
+            "name": name,
+            "info": info,
+            "hits": 0,
+        }
+        return data
     elif has_upc and has_name:
         data = nutritionix_api.get_product_info_from_item_exact_name(name)
+        if not data:
+            return {}
         return database.insert_product_info(upc, name, data)

@@ -80,8 +80,10 @@ def get_product_info_from_item_exact_name(item_name: str) -> dict:
                        "section_ids"]}
 
     product_info = requests.post(url=NUTRITIONIX_URL, headers=header, json=data)
-
-    return product_info.json()['hits'][0]
+    hits = product_info.json()['hits']
+    if not hits:
+        return {}
+    return hits[0]
 
 
 def get_product_name_from_upc(upc: str) -> str:
