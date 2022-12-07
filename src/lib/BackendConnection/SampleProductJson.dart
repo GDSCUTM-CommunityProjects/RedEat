@@ -86,3 +86,40 @@ Map<String, dynamic> product2 =
 };
 
 Map<String, dynamic> emptyProduct = {};
+
+Map<String, dynamic> sampleProduct = {
+  'upc': "060410001318",
+  'name': 'Sun Chips Garden Salsa',
+  'itemName': 'Sun-Chips Garden Salsa',
+  'fields': {
+    "brand_name": "Frito-Lay",
+    "item_name": "Sun-Chips Garden Salsa",
+    "brand_id": "51db37d1176fe9790a899dfb",
+    "item_id": "52b7bd9b2dedad540e009bd1",
+    "item_type": 2,
+    "item_description": null,
+    "nf_ingredient_statement": "Whole Corn, Sunflower and/or Canola Oil, Whole Wheat, Brown Rice Flour, Whole Oat Flour, Sugar, Tomato Powder, Salt, Natural Flavors, Maltodextrin (Made from Corn), Cheddar Cheese (Milk, Cheese Cultures, Salt, Enzymes), Dextrose, Buttermilk, Onion Powder, Whey, Yeast Extract, Romano Cheese (Part-Skim Cow's Milk, Cheese Cultures, Salt, Enzymes), Whey Protein Concentrate, Corn Oil, Spices (Including Jalapeno Pepper), Citric Acid, Paprika Extracts, and Lactic Acid.",
+    "nf_calories": 140,
+    "nf_calories_from_fat": null,
+    "nf_total_fat": 6,
+    "nf_saturated_fat": 0.5,
+    "nf_monounsaturated_fat": null,
+    "nf_polyunsaturated_fat": null,
+    "nf_trans_fatty_acid": 0,
+    "nf_cholesterol": 0,
+    "nf_sodium": 140,
+    "nf_total_carbohydrate": 19,
+    "nf_dietary_fiber": 2,
+    "nf_sugars": 2,
+    "nf_protein": 2,
+    "nf_vitamin_a_dv": null,
+    "nf_vitamin_c_dv": null,
+    "nf_calcium_dv": 0.77,
+    "nf_iron_dv": 3.33,
+    "nf_servings_per_container": 7,
+    "nf_serving_size_qty": 15,
+    "nf_serving_size_unit": "chips",
+    "nf_serving_weight_grams": 28,
+    "updated_at": "2021-05-01T13:56:32.000Z"
+  }
+};

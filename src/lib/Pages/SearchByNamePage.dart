@@ -123,7 +123,7 @@ class _SearchByNamePageState extends State<SearchByNamePage> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.red,
-        title: Text("Search by Name"),
+        title: const Text("Search by Name"),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -141,10 +141,6 @@ class _SearchByNamePageState extends State<SearchByNamePage> {
                       // color: Colors.grey[500],
                       color: Colors.red
                     ),
-                    // border: OutlineInputBorder(
-                    //   borderRadius: BorderRadius.circular(10.0),
-                    //
-                    // ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: const BorderSide(color: Colors.red, width: 1.0),
@@ -166,6 +162,7 @@ class _SearchByNamePageState extends State<SearchByNamePage> {
                   errorMessage("Unable to find this product")
                 ],
 
+                // Search button
                 const SizedBox(height: 20),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(

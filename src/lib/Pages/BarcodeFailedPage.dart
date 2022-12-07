@@ -23,7 +23,7 @@ class BarcodeFailedPage extends StatelessWidget {
                   ),
                 ),
 
-                SizedBox(height:40),
+                const SizedBox(height:40),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.red,
@@ -34,7 +34,7 @@ class BarcodeFailedPage extends StatelessWidget {
                     ),
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context) => SearchByNamePage())
+                          MaterialPageRoute(builder: (context) => const SearchByNamePage())
                         // MaterialPageRoute(builder: (context) => ProductInfo("060410001318"))
                       );
                     },

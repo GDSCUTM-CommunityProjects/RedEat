@@ -23,7 +23,7 @@ class _NavbarState extends State<Navbar> {
 
   // Screens for each tab in the narbar
   final screens = [
-    BarcodeFailedPage(),
+    ProductInfo(sampleProduct),
     SearchDefaultPage(),
     SettingsPage()
   ];

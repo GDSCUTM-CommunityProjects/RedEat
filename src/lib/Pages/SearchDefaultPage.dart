@@ -24,17 +24,8 @@ class _SearchDefaultPageState extends State<SearchDefaultPage> {
   String barcode = "";
   Future<String>? _barcodeResponse;
 
-
+  // Make Post request and return product information
   Future<String> getProductInfo(String barcode) async {
-    final payload = '{"upc": $barcode, "product_name": ""}';
-    Map<String, dynamic> queryParams = {
-      'upc': barcode,
-      'product_name': ""
-    };
-
-    // var uri = Uri.http(BackendURL.BACKEND_URL, "api/search_product", { 'upc': barcode, 'product_name': ''});
-    // var uri = Uri.parse("http://${BackendURL.BACKEND_URL}/api/search_product?upc=$barcode&product_name=");
-
     final response = await http.post(
       // uri,
       Uri.parse("${BackendURL.BACKEND_URL}api/search_product"),
@@ -50,14 +41,12 @@ class _SearchDefaultPageState extends State<SearchDefaultPage> {
     if (response.statusCode == 200) {
       return response.body;
     } else {
-      // If the server did not return a 201 CREATED response,
-      // then throw an exception.
       throw Exception('Failed to get product information');
     }
   }
 
 
-  // Function to scan barcode
+  // Scans barcode and redirect to ProductInfoPage or BarcodeFailedPage depending on the scanned results
   Future<void> scanBarcode() async {
     String result;
     try {
@@ -158,24 +147,14 @@ class _SearchDefaultPageState extends State<SearchDefaultPage> {
                 ),
               ),
 
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              //   child: Divider(
-              //     color: Color(0xff343a40),
-              //     thickness: 5,
-              //   ),
-              // ),
-              // // SizedBox(height: 30),
-
-              SizedBox(height: 50,),
-              // searchOptionButton(context, Icons.qr_code_scanner, "Scan Barcode", "/barcodeScanner", null),
+              const SizedBox(height: 50,),
               searchOptionButton(context, const IconData(0xf586, fontFamily: "CupertinoIcons.iconFont", fontPackage: "iconFontPackage"), "Scan Barcode", ""),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               searchOptionButton(context, Icons.search, "Search by name", "/searchByName"),
-              SizedBox(height: 20,),
-              searchOptionButton(context, Icons.photo_library, "Choose from library", "/barcodeFailed"),
+              // SizedBox(height: 20,),
+              // searchOptionButton(context, Icons.photo_library, "Choose from library", "/barcodeFailed"),
 
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               Text(
                 "Barcode: $barcode",
                 style: const TextStyle(
@@ -221,7 +200,7 @@ class _SearchDefaultPageState extends State<SearchDefaultPage> {
                         child: Text(
                           title,
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 24
                           ),
                         ),
@@ -234,48 +213,3 @@ class _SearchDefaultPageState extends State<SearchDefaultPage> {
     );
   }
 }
-
-// Buttons to navigate to other search pages
-// Widget searchOptionButton(BuildContext context, IconData icon, String title, String routeName, Future<void> func) {
-//   return Padding(
-//       padding: const EdgeInsets.symmetric(horizontal: 30.0),
-//       child: Container(
-//         height: 90,
-//         child: ElevatedButton(
-//             style: ElevatedButton.styleFrom(
-//                 backgroundColor: Colors.red,
-//                 minimumSize: const Size.fromHeight(50),
-//                 shape: RoundedRectangleBorder(
-//                   borderRadius: BorderRadius.circular(12),
-//                 )
-//             ),
-//             onPressed: () {
-//               // Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => page()));
-//               (routeName != "") ? Navigator.pushNamed(context, routeName) : func;
-//             },
-//             child: Row(
-//               children: [
-//                 Padding(
-//                   padding: const EdgeInsets.symmetric(horizontal:10, vertical: 20),
-//                   child: Icon(
-//                     icon,
-//                     size: 28,
-//                   ),
-//                 ),
-//                 Expanded(
-//                   child: Center(
-//                     child: Text(
-//                       title,
-//                       textAlign: TextAlign.center,
-//                       style: TextStyle(
-//                           fontSize: 24
-//                       ),
-//                     ),
-//                   ),
-//                 )
-//               ],
-//             )
-//         )
-//       )
-//   );
-// }
