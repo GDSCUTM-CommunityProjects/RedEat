@@ -117,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: const [
                 Text(
                   'Red',
                   style: TextStyle(

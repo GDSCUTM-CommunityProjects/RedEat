@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:src/Pages/login.dart';
 import 'package:src/Pages/signup.dart';
+import 'Pages/BarcodeFailedPage.dart';
 import 'Pages/MePage.dart';
 import 'package:src/Pages/InitialSetupPage.dart';
 import 'package:src/Pages/SettingsPage.dart';
 import 'package:src/Navbar.dart';
 import 'package:src/Pages/BarcodeScanner.dart';
+import 'package:src/Pages/SearchByNamePage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,6 +29,8 @@ class MyApp extends StatelessWidget {
         '/settings': (context) => const SettingsPage(),
         '/navbar': (context) => const Navbar(),
         '/barcodeScanner': (context) => BarCodeScanner(),
+        '/searchByName': (context) => SearchByNamePage(),
+        '/barcodeFailed': (context) => BarcodeFailedPage()
       },
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -125,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 textStyle: const TextStyle(fontSize: 20),
               ),
               onPressed: () {
-                Navigator.pushNamed(context, '/register');
+                Navigator.pushNamed(context, '/login');
               },
               child: const Text('Login'),
             ),
