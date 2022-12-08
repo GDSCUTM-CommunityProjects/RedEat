@@ -30,7 +30,8 @@ class MyApp extends StatelessWidget {
         '/navbar': (context) => const Navbar(),
         '/barcodeScanner': (context) => BarCodeScanner(),
         '/searchByName': (context) => SearchByNamePage(),
-        '/barcodeFailed': (context) => BarcodeFailedPage()
+        '/barcodeFailed': (context) => BarcodeFailedPage(),
+        '/mePage': (context) => MePage(),
       },
       title: 'Flutter Demo',
       theme: ThemeData(

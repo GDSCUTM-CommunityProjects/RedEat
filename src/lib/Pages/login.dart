@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
+import 'package:src/LocalDB/DBSetup/UserInfoDB.dart';
 import 'package:src/Pages/MePage.dart';
 
 import '../BackendConnection/BackendURL.dart';
@@ -42,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
 
   // Function used to either display an error message if there was a problem
   // logging in or redirect to ME page if login is successful
-  void handleLogin() {
+  void handleLogin() async {
     // Check whether there is input in both the username or password field
     if (usernameController.text.length > 0 &&
         passwordController.text.length > 0) {
@@ -56,12 +57,18 @@ class _LoginPageState extends State<LoginPage> {
       if (_loggedUser != null) {
         // Once a response is received and loginUser returns an error message, use
         // .then to work with the returned value
-        _loggedUser?.then((value) {
+        _loggedUser?.then((value) async {
           // If there is no error message returned we have a successful login.
           // Navigate to the ME page
           if (value == "") {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (BuildContext context) => MePage()));
+            if (await UserInfoDB.instance.getUser() == null) {
+              Navigator.pushNamed(context, '/intialSetup');
+            } else {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => MePage()));
+            }
           } else {
             // Otherwise record the error message
             setState(() {
@@ -235,32 +242,10 @@ class _LoginPageState extends State<LoginPage> {
                     'Login',
                     style: TextStyle(fontSize: 24),
                   )),
-              ),
-              SizedBox(height: 20,),
-
-              // Register Now
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Don't have an account yet?",
-                    style: TextStyle(
-                      color: Colors.grey
-                    )
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/signup');
-                    },
-                    child: const Text(
-                      'Register Now!',
-                        style: TextStyle(
-                            color: Colors.red,
-                        )
-                    ),
-                  ),
-                ],
-              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
 
             // Register Now
             Row(
