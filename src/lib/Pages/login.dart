@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'package:src/LocalDB/DBSetup/UserInfoDB.dart';
+import 'package:src/LocalDB/UserInfo.dart';
 import 'package:src/Pages/MePage.dart';
 
 import '../BackendConnection/BackendURL.dart';
@@ -62,13 +63,19 @@ class _LoginPageState extends State<LoginPage> {
           // If there is no error message returned we have a successful login.
           // Navigate to the ME page
           if (value == "") {
-            if (await UserInfoDB.instance.getUser() == null) {
+            UserInfo? checkUser = await UserInfoDB.instance.getUser();
+            if (checkUser == null) {
               Navigator.pushNamed(context, '/intialSetup');
             } else {
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) => Navbar()));
+              if (usernameController.text != checkUser.name) {
+                UserInfoDB.instance.clearDB();
+                Navigator.pushNamed(context, '/intialSetup');
+              } else {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => Navbar()));
+              }
             }
           } else {
             // Otherwise record the error message

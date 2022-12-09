@@ -7,7 +7,7 @@ import 'package:src/LocalDB/HistoryInfo.dart';
 
 import '../UserInfo.dart';
 
-// Local DB code inspired by https://www.youtube.com/watch?v=UpKrhZ0Hppk and 
+// Local DB code inspired by https://www.youtube.com/watch?v=UpKrhZ0Hppk and
 // https://docs.flutter.dev/cookbook/persistence/sqlite
 
 class UserInfoDB {
@@ -93,10 +93,9 @@ class UserInfoDB {
     await db.delete('history', where: 'id = ?', whereArgs: [entry_id]);
   }
 
-  
-
   void clearDB() async {
     final db = await instance.database;
     db.delete('user');
+    db.delete('history');
   }
 }
