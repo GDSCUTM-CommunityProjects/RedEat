@@ -7,6 +7,9 @@ import 'package:src/LocalDB/HistoryInfo.dart';
 
 import '../UserInfo.dart';
 
+// Methods for this class were inspired by https://www.youtube.com/watch?v=UpKrhZ0Hppk
+// and the Flutter documentation https://docs.flutter.dev/cookbook/persistence/sqlite
+
 class UserInfoDB {
   static final UserInfoDB instance = UserInfoDB._init();
 

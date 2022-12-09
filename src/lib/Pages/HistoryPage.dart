@@ -43,15 +43,15 @@ class _HistoryPageState extends State<HistoryPage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-
+    // Wait until data is received from local DB
     return (history == null)
         ? Center(child: CircularProgressIndicator(),) : Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
-        title: Text("About Me"),
+        title: Text("Your Eating History"),
       ),
-      // Page is set to scrollable in case we want to add more sections that
-      // overfill the page
+      // Create a list displaying the history
+      // List style taken from http://www.droidmonk.com/flutter/display-a-list-in-flutter/
       body: ListView.separated(
       itemCount: history!.length,
       itemBuilder: (BuildContext context, index) {
