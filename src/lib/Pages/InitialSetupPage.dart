@@ -342,7 +342,7 @@ class _InitialSetupPageState extends State<InitialSetupPage> {
                             .round(),
                         goalStatus: goalStatus);
                     UserInfoDB.instance.createUser(dbentry);
-                    Navigator.pushNamed(context, '/mePage');
+                    Navigator.pushNamed(context, '/navbar');
                   },
                   child: Text(
                     'Next',

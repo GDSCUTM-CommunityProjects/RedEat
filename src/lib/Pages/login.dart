@@ -8,6 +8,7 @@ import 'package:src/LocalDB/UserInfo.dart';
 import 'package:src/Pages/MePage.dart';
 
 import '../BackendConnection/BackendURL.dart';
+import '../Navbar.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -73,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                        builder: (BuildContext context) => MePage()));
+                        builder: (BuildContext context) => Navbar()));
               }
             }
           } else {
@@ -208,17 +209,20 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     if (!hide_error) // Show incorrect Username message if username is incorrect
                       Row(
+                        // direction: Axis.vertical,
                         children: [
                           Icon(
                             Icons.error,
                             color: Colors.red,
                             size: 14.0,
                           ),
-                          Text(
-                            error_message,
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                              color: Colors.red,
+                          Flexible(
+                            child: Text(
+                              error_message,
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                color: Colors.red,
+                              ),
                             ),
                           ),
                         ],

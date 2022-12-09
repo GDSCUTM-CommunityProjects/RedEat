@@ -146,16 +146,13 @@ class _MePageState extends State<MePage> {
     // TODO: implement build
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.red,
-        title: Text("About Me"),
-      ),
+
       // Page is set to scrollable in case we want to add more sections that
       // overfill the page
       body: SingleChildScrollView(
         child: Column(children: [
           SizedBox(
-            height: 20,
+            height: 50,
           ),
           Padding(
             // Will be username section
@@ -421,6 +418,21 @@ class _MePageState extends State<MePage> {
           if (weight > 0 && height > 0)
             MeasurementIndexBox(
                 indexName: "BMI", indexValue: (BMI).toStringAsFixed(2)),
+
+          // History button
+          SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: BaseButtonTemplate(
+              buttonTitle: "History",
+              fontSize: 20,
+              onPressed: () {
+                Navigator.pushNamed(context, '/historyPage');
+              },
+            )
+          ),
+
+          SizedBox(height: 20),
           // Save button for when backend integration is implemented
           if (toSave && weight > 0 && height > 0)
             Padding(
