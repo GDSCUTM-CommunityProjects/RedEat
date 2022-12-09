@@ -66,15 +66,11 @@ class _LoginPageState extends State<LoginPage> {
             if (checkUser == null) {
               Navigator.pushNamed(context, '/intialSetup');
             } else {
-              if (usernameController.text != checkUser.name) {
-                UserInfoDB.instance.clearDB();
-                Navigator.pushNamed(context, '/intialSetup');
-              } else {
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                         builder: (BuildContext context) => MePage()));
-              }
+
             }
           } else {
             // Otherwise record the error message
