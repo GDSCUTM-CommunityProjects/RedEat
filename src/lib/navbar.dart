@@ -3,6 +3,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:src/BackendConnection/SampleProductJson.dart';
 import 'package:src/Pages/BarcodeFailedPage.dart';
 import 'package:src/Pages/InitialSetupPage.dart';
+import 'package:src/Pages/MePage.dart';
 import 'package:src/Pages/login.dart';
 import 'package:src/Pages/SettingsPage.dart';
 import 'package:src/Pages/SearchDefaultPage.dart';
@@ -23,7 +24,7 @@ class _NavbarState extends State<Navbar> {
 
   // Screens for each tab in the narbar
   final screens = [
-    ProductInfo(sampleProduct),
+    MePage(),
     SearchDefaultPage(),
     SettingsPage()
   ];
