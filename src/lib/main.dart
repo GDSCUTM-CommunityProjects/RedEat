@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:src/Pages/HistoryPage.dart';
 import 'package:src/Pages/login.dart';
+
+import 'Pages/LandingPage.dart';
 import 'package:src/Pages/signup.dart';
 import 'Pages/BarcodeFailedPage.dart';
 import 'Pages/MePage.dart';
@@ -46,13 +48,12 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
       ),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
-
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -183,12 +184,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+        body: Center(
+            // Center is a layout widget. It takes a single child and positions it
+            // in the middle of the parent.
+            child:
+                LandingPage() // This trailing comma makes auto-formatting nicer for build methods.
+            ));
   }
 }
