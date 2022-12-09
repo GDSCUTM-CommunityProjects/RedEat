@@ -154,13 +154,13 @@ class _SearchDefaultPageState extends State<SearchDefaultPage> {
               // SizedBox(height: 20,),
               // searchOptionButton(context, Icons.photo_library, "Choose from library", "/barcodeFailed"),
 
-              const SizedBox(height: 30),
-              Text(
-                "Barcode: $barcode",
-                style: const TextStyle(
-                    fontSize: 24
-                ),
-              )
+              // const SizedBox(height: 30),
+              // Text(
+              //   "Barcode: $barcode",
+              //   style: const TextStyle(
+              //       fontSize: 24
+              //   ),
+              // )
             ]
           )
         )
