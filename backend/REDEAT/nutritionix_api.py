@@ -27,22 +27,21 @@ def get_product_suggestions_from_name(name: str) -> dict:
 
     product_info = requests.post(url=NUTRITIONIX_URL, headers=header, json=data)
 
-    print(product_info.json()["hits"])
+    return product_info.json()["hits"]
 
 
-def get_product_info_from_item_exact_name(item_name: str, brand_name:str) -> dict:
+def get_product_info_from_item_exact_name(item_name: str) -> dict:
     """
     returns all the product info from Nutritionix database given the item_id
     associated with the product
     :param item_name: Exact item name from Nutritionix Database
-    :param brand_name: Exact brand name from Nutritionix Database
     :return: Dict containing product information
     """
     header = {"Content-Type": "application/json"}
     data = {"appId": APP_ID,
             "appKey": APP_KEY,
             "limit": 1,
-            "queries": {"item_name": item_name, "brand_name": brand_name},
+            "queries": {"item_name": item_name},
             "filters": {"item_type": 2},
             "fields": ["brand_name",
                        "item_name",
@@ -81,8 +80,10 @@ def get_product_info_from_item_exact_name(item_name: str, brand_name:str) -> dic
                        "section_ids"]}
 
     product_info = requests.post(url=NUTRITIONIX_URL, headers=header, json=data)
-
-    print(product_info.json())
+    hits = product_info.json()['hits']
+    if not hits:
+        return {}
+    return hits[0]
 
 
 def get_product_name_from_upc(upc: str) -> str:
@@ -91,12 +92,15 @@ def get_product_name_from_upc(upc: str) -> str:
     given UPC.
 
     :param upc: 12 digit UPC code including leading zeros
-    :return: product name associated with UPC. empty string if product not found
+    :return: Product name associated with UPC. Empty string if product not found
     """
     full_page = requests.get(url=UPC_DATABASE_URL + upc).text
-    start_index = full_page.find("Description</td><td></td><td>")
-    offset = len("Description</td><td></td><td>")
-    end_index = full_page[start_index + offset:].find("</td>")
+    if "Item Not Found" in full_page:
+        return ""
+    else:
+        start_index = full_page.find("Description</td><td></td><td>")
+        offset = len("Description</td><td></td><td>")
+        end_index = full_page[start_index + offset:].find("</td>")
 
-    return full_page[start_index + offset:start_index + len(
-        "Description</td><td></td><td>") + end_index]
+        return full_page[start_index + offset:start_index + len(
+            "Description</td><td></td><td>") + end_index]
