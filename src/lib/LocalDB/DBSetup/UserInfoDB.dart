@@ -22,10 +22,10 @@ class UserInfoDB {
   }
 
   Future<Database> _initDB(String DBpath) async {
-    final get_path = await getDatabasesPath();
-    final path = join(get_path, DBpath);
+    final path = join(await getDatabasesPath(), DBpath);
 
-    return await openDatabase(path, version: 1, onCreate: _onCreate);
+    Database db = await openDatabase(path, version: 1, onCreate: _onCreate);
+    return db;
   }
 
   Future _onCreate(Database db, int version) async {
@@ -35,21 +35,27 @@ class UserInfoDB {
         'CREATE TABLE user(id INTEGER PRIMARY KEY, name TEXT, weight INTEGER, height INTEGER, goalstatus INTEGER)');
   }
 
+  Future<List<HistoryInfo>> readHistory() async {
+    final db = await instance.database;
+
+    final result = await db.query('history');
+
+    return result.map((json) => HistoryInfo.fromJson(json)).toList();
+  }
+
   Future<HistoryInfo> createHistoryEntry(HistoryInfo entry) async {
     final db = await instance.database;
 
     final addedID = await db.insert('history', entry.toMap());
-    HistoryInfo cpy =
-        HistoryInfo(id: addedID, name: entry.name, calories: entry.calories);
+    HistoryInfo cpy = HistoryInfo(name: entry.name, calories: entry.calories);
     return cpy;
   }
 
   void createUser(UserInfo user) async {
     final db = await instance.database;
 
-
-    await db.insert('user', user.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
-
+    await db.insert('user', user.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   Future<UserInfo?> getUser() async {
@@ -84,20 +90,10 @@ class UserInfoDB {
     await db.delete('history', where: 'id = ?', whereArgs: [entry_id]);
   }
 
-  Future<List<HistoryInfo>> getHistory() async {
-    final db = await instance.database;
+  
 
-    final List<Map<String, dynamic>> maps = await db.query('history');
-    return List.generate(maps.length, (index) {
-      return HistoryInfo(
-          id: maps[index]['id'],
-          name: maps[index]['name'],
-          calories: maps[index]['calories']);
-    });
-  }
-
-  void clearDV() async {
+  void clearDB() async {
     final db = await instance.database;
-    db.close();
+    db.delete('user');
   }
 }

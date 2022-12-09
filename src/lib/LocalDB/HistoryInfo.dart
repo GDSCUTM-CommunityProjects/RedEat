@@ -1,10 +1,10 @@
 class HistoryInfo {
-  final int id;
+  final int? id;
   final String name;
   final int calories;
 
   const HistoryInfo({
-    required this.id,
+    this.id,
     required this.name,
     required this.calories,
   });
@@ -16,4 +16,10 @@ class HistoryInfo {
       'calories': calories,
     };
   }
+
+  static HistoryInfo fromJson(Map<String, Object?> json) => HistoryInfo(
+        id: json['id'] as int?,
+        name: json['name'] as String,
+        calories: json['calories'] as int,
+      );
 }

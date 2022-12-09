@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:src/Pages/HistoryPage.dart';
 import 'package:src/Pages/login.dart';
 import 'package:src/Pages/signup.dart';
 import 'Pages/BarcodeFailedPage.dart';
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
         '/searchByName': (context) => SearchByNamePage(),
         '/barcodeFailed': (context) => BarcodeFailedPage(),
         '/mePage': (context) => MePage(),
+        '/historyPage':(context) => HistoryPage(),
       },
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -169,6 +171,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, '/navbar');
               },
               child: const Text('NavBar'),
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: const TextStyle(fontSize: 20),
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/historyPage');
+              },
+              child: const Text('History'),
             ),
           ],
         ),
