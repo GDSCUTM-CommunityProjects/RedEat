@@ -432,11 +432,10 @@ class _MePageState extends State<MePage> {
             )
           ),
 
-          SizedBox(height: 20),
           // Save button for when backend integration is implemented
           if (toSave && weight > 0 && height > 0)
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 35),
+              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 25),
               child: Container(
                   child: BaseButtonTemplate(
                       buttonTitle: "Save",
@@ -452,6 +451,8 @@ class _MePageState extends State<MePage> {
                       color: Colors.red,
                       fontSize: 20)),
             ),
+
+          SizedBox(height: 80,)
         ]),
       ),
     );

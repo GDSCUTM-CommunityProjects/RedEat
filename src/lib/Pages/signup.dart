@@ -135,7 +135,7 @@ class _SignupPageState extends State<SignupPage> {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: Colors.red,
-          title: Text('Login'),
+          title: Text('Sign Up'),
           centerTitle: true,
         ),
         body: SafeArea(

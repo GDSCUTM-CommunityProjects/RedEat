@@ -25,8 +25,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/',
       routes: {
-        '/': (context) => const MyHomePage(
-            title: 'Flutter Demo Home Page'), // Initial route is MyHomePage
+        '/': (context) => LandingPage(), // Initial route is MyHomePage
         '/login': (context) => const LoginPage(), // Route for login page
         '/signup': (context) => const SignupPage(),
         '/intialSetup': (context) => const InitialSetupPage(),

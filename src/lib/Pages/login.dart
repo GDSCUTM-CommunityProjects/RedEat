@@ -211,11 +211,11 @@ class _LoginPageState extends State<LoginPage> {
                       Row(
                         // direction: Axis.vertical,
                         children: [
-                          Icon(
-                            Icons.error,
-                            color: Colors.red,
-                            size: 14.0,
-                          ),
+                          // Icon(
+                          //   Icons.error,
+                          //   color: Colors.red,
+                          //   size: 14.0,
+                          // ),
                           Flexible(
                             child: Text(
                               error_message,
