@@ -12,7 +12,7 @@ class _InitialSetupPageState extends State<InitialSetupPage> {
   final heightUnits = ['m', 'cm', 'ft'];
   final weightUnits = ['kg', 'lb'];
   final goalList = ["Gain Weight", "Maintain Weight", "Lose Weight"];
-  // final timePeriodList = ["every week", "every month"]
+  // final timePeriodList = ["every week", "every month"];
   String selectedHeightUnit = 'm';
   String selectedWeightUnit = 'kg';
   String selectedGoal = "Gain Weight";
@@ -27,7 +27,6 @@ class _InitialSetupPageState extends State<InitialSetupPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
   }
 
   @override
@@ -200,29 +199,29 @@ class _InitialSetupPageState extends State<InitialSetupPage> {
                 )
               ),
 
-              // Select week/month
-              Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                  child: DropdownButtonFormField(
-                    value: selectedGoal,
-                    items: goalList.map((e) => DropdownMenuItem(child: Text(e), value: e)).toList(),
 
-                    decoration: const InputDecoration(
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.red),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.red),
-                      ),
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        selectedGoal = value as String;
-                      });
-                    },
-                  )
-              ),
-              SizedBox(height: 20,),
+              // Padding(
+              //     padding: const EdgeInsets.symmetric(horizontal: 40.0),
+              //     child: DropdownButtonFormField(
+              //       value: selectedGoal,
+              //       items: goalList.map((e) => DropdownMenuItem(child: Text(e), value: e)).toList(),
+
+              //       decoration: const InputDecoration(
+              //         enabledBorder: UnderlineInputBorder(
+              //           borderSide: BorderSide(color: Colors.red),
+              //         ),
+              //         focusedBorder: UnderlineInputBorder(
+              //           borderSide: BorderSide(color: Colors.red),
+              //         ),
+              //       ),
+              //       onChanged: (value) {
+              //         setState(() {
+              //           selectedGoal = value as String;
+              //         });
+              //       },
+              //     )
+              // ),
+              // SizedBox(height: 20,),
 
               // Error messages
               Padding(
