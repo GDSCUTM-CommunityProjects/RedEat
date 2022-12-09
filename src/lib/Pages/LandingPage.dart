@@ -54,7 +54,7 @@ class LandingPage extends StatelessWidget {
                   onPressed: () {
                     Navigator.pushNamed(
                       context,
-                      '/register', // need a register page
+                      '/signup', // need a register page
                     );
                   },
                   buttonTitle: 'Sign Up',
