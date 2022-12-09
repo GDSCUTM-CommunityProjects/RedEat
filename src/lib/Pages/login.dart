@@ -71,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                     context,
                     MaterialPageRoute(
                         builder: (BuildContext context) => Navbar()));
-              }
+              
             }
           } else {
             // Otherwise record the error message
