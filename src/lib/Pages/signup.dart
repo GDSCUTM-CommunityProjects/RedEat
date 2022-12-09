@@ -1,12 +1,13 @@
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:src/BackendConnection/BackendURL.dart';
-import 'package:src/LocalDB/DBSetup/UserInfoDB.dart';
 import 'package:src/Pages/login.dart';
 import 'package:http/http.dart' as http;
 
 import '../BackendConnection/User.dart';
+
 
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
@@ -16,6 +17,7 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
+
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
   final usernameController = TextEditingController();
@@ -30,8 +32,8 @@ class _SignupPageState extends State<SignupPage> {
   bool validFirstName = true;
   bool validLastName = true;
   bool badData = false;
-  Future<int>? _signupUser; // Used to keep track of whether a request is
-  // awaiting a response or if it has received a response
+  Future<int>? _signupUser; // Used to keep track of whether a request is 
+                            // awaiting a response or if it has received a response 
 
   // Call backend request to create a user
   Future<int> signupUser(String username, String password, String email,
@@ -71,9 +73,9 @@ class _SignupPageState extends State<SignupPage> {
       future: _signupUser,
       builder: ((context, snapshot) {
         return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [CircularProgressIndicator()],
-        );
+          mainAxisAlignment: MainAxisAlignment.center, children: [
+          CircularProgressIndicator()
+        ],);
       }),
     );
   }
@@ -101,12 +103,11 @@ class _SignupPageState extends State<SignupPage> {
         _signupUser?.then((value) {
           // Successful registration, redirect to login
           if (value == 0) {
-            UserInfoDB.instance.clearDB();
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                     builder: (BuildContext context) => LoginPage()));
-            // Unsuccessful login, invalid username
+          // Unsuccessful login, invalid username
           } else if (value == 1) {
             // notify the user of an invalid username
             setState(() => validUsername = false);
@@ -301,6 +302,7 @@ class _SignupPageState extends State<SignupPage> {
 
   Widget inputFieldTemplate(
       String fieldName, TextEditingController controller, bool valid) {
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30.0),
       child: Container(
@@ -319,6 +321,7 @@ class _SignupPageState extends State<SignupPage> {
                 hintText: fieldName,
               ),
             )),
+
       ),
     );
   }

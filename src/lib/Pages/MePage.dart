@@ -3,8 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:expandable/expandable.dart';
-import 'package:src/LocalDB/DBSetup/UserInfoDB.dart';
-import 'package:src/LocalDB/UserInfo.dart';
 import 'package:src/Visual%20Components/Buttons/BaseButtonTemplate.dart';
 import 'package:src/Visual%20Components/Buttons/GoalButton.dart';
 import 'package:src/Visual%20Components/FormComponents/CollapsableSection.dart';
@@ -22,8 +20,8 @@ class MePage extends StatefulWidget {
 }
 
 class _MePageState extends State<MePage> {
-  int weight = 0;
-  int height = 0;
+  int weight = 180;
+  int height = 71;
   double BMI = 0;
   // Controller that corresponds to a Textfield for a user to enter their weight
   final weightTextController = TextEditingController();
@@ -36,14 +34,13 @@ class _MePageState extends State<MePage> {
   // On a textfield edit, the user will be prompted to save their changes
   bool toSave = false;
   final goalList = ["Gain Weight", "Maintain Weight", "Lose Weight"];
-  String name = "";
-  int goalStatus = 0;
-  UserInfo? user;
 
   @override
   void initState() {
     // Currently the stats are set to my weight and height
-    super.initState(); // Height measurement, stored in m or ft
+    super.initState();
+    weight = 180; // Weight measurement, stored in lbs or kg
+    height = 71; // Height measurement, stored in m or ft
 
     // Set the initial value of the weight text field to the 'weight' attribute
     weightTextController.text = weight.toString();
@@ -63,24 +60,6 @@ class _MePageState extends State<MePage> {
     // Keeps track of whether weight is kept in pounds or kilograms
     isLbs = true;
     toSave = false;
-
-    setBMI();
-    init();
-  }
-
-  void init() async {
-    UserInfo? cpy = await UserInfoDB.instance.getUser();
-    this.user = cpy;
-    setState(() {
-      this.weight = user!.weight;
-      this.height = user!.height;
-      this.name = user!.name;
-      this.goalStatus = user!.goalStatus;
-    });
-
-    weightTextController.text = weight.toString();
-    heightTextControllerUnit1.text = (height ~/ 12).toString();
-    heightTextControllerUnit2.text = (height % 12).toString();
     setBMI();
   }
 
@@ -144,7 +123,6 @@ class _MePageState extends State<MePage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
@@ -157,11 +135,11 @@ class _MePageState extends State<MePage> {
           SizedBox(
             height: 20,
           ),
-          Padding(
+          const Padding(
             // Will be username section
             padding: EdgeInsets.symmetric(vertical: 15),
             child: Text(
-              name,
+              "Q. Garcia",
               style: TextStyle(
                   fontSize: 40, fontWeight: FontWeight.bold, color: Colors.red),
             ),
@@ -206,33 +184,21 @@ class _MePageState extends State<MePage> {
                         Container(
                           width: 120,
                           child: GoalButton(
-                            onPressed: () {
-                              setState(() {
-                                goalStatus = 0;
-                              });
-                            },
+                            onPressed: () {},
                             buttonTitle: goalList[0],
                           ),
                         ),
                         Container(
                           width: 120,
                           child: GoalButton(
-                            onPressed: () {
-                              setState(() {
-                                goalStatus = 1;
-                              });
-                            },
+                            onPressed: () {},
                             buttonTitle: goalList[1],
                           ),
                         ),
                         Container(
                           width: 120,
                           child: GoalButton(
-                            onPressed: () {
-                              setState(() {
-                                goalStatus = 2;
-                              });
-                            },
+                            onPressed: () {},
                             buttonTitle: goalList[2],
                           ),
                         )
@@ -428,15 +394,7 @@ class _MePageState extends State<MePage> {
               child: Container(
                   child: BaseButtonTemplate(
                       buttonTitle: "Save",
-                      onPressed: () {
-                        UserInfo updateEntry = UserInfo(
-                            id: user!.id,
-                            name: name,
-                            weight: weight,
-                            height: height,
-                            goalStatus: goalStatus);
-                        UserInfoDB.instance.updateUser(updateEntry);
-                      },
+                      onPressed: () {},
                       color: Colors.red,
                       fontSize: 20)),
             ),
