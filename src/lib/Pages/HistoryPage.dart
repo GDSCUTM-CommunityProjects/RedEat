@@ -48,10 +48,9 @@ class _HistoryPageState extends State<HistoryPage> {
         ? Center(child: CircularProgressIndicator(),) : Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
-        title: Text("About Me"),
+        title: Text("Your Eating History"),
       ),
-      // Page is set to scrollable in case we want to add more sections that
-      // overfill the page
+      // Styled the list based on http://www.droidmonk.com/flutter/display-a-list-in-flutter/
       body: ListView.separated(
       itemCount: history!.length,
       itemBuilder: (BuildContext context, index) {
