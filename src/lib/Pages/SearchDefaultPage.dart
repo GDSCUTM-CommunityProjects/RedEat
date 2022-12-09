@@ -148,7 +148,7 @@ class _SearchDefaultPageState extends State<SearchDefaultPage> {
               ),
 
               const SizedBox(height: 50,),
-              searchOptionButton(context, const IconData(0xf586, fontFamily: "CupertinoIcons.iconFont", fontPackage: "iconFontPackage"), "Scan Barcode", ""),
+              searchOptionButton(context, Icons.camera_alt, "Scan Barcode", ""),
               const SizedBox(height: 20,),
               searchOptionButton(context, Icons.search, "Search by name", "/searchByName"),
               // SizedBox(height: 20,),
